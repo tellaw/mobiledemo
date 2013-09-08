@@ -1,0 +1,382 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	background-image:url(../images/body-bg.png);
+	background-repeat:repeat;
+}
+
+.content{
+	background-image:url(../images/body-bg.png);
+	background-repeat:repeat;
+}
+
+.header{
+	background-image:url(../images/body-bg.png);
+	background-repeat:repeat;
+}
+
+.page-content{
+	background-image:url(../images/tablet-bg.png);
+	background-repeat:repeat;
+}
+
+
+.page-hider{
+	position:fixed;
+	width:100%;
+	height:0%;
+	display:block;
+	background-color:rgba(255,255,255,0.8);	
+	z-index:99998;
+}
+
+.navigation-wrapper{
+	overflow:hidden;
+}
+
+.page-navigation{
+	display:none;
+	width:300px;
+	margin-left:auto;
+	margin-right:auto;
+	z-index:99999;
+}
+
+.nav-icon{
+	overflow:visible;
+	width:50px;
+	height:70px;
+	margin-left:25px;
+	margin-right:25px;
+	float:left;
+	margin-bottom:20px;
+}
+
+.nav-icon a:hover{
+	background-color:rgba(59,64,67,0.8);	
+}
+
+
+.nav-icon a{
+	background-repeat:no-repeat;
+	background-size:30px 30px;
+	background-position:center center;	
+	overflow:visible;
+	width:50px;
+	height:50px;
+	background-color:rgba(59,64,67,1);	
+	border-radius:50px;
+	text-align:center;
+}
+
+.nav-icon em{
+	margin-left:-3px;
+	font-family:'Dosis', sans-serif;
+	color:rgba(59,64,67,1)!important;	
+	text-align:center;
+	width:56px;
+	display:block;
+	font-style:normal;
+	padding-top:5px;
+}
+
+.home-nav{		background-image:url(../images/misc/8.png);}
+.about-nav{		background-image:url(../images/misc/5.png);}
+.features-nav{	background-image:url(../images/misc/3.png);}
+.type-nav{		background-image:url(../images/misc/2.png);}
+.jquery-nav{	background-image:url(../images/misc/6.png);}
+.others-nav{	background-image:url(../images/misc/1.png);}
+.folios-nav{	background-image:url(../images/misc/4.png);}
+.gallery-nav{	background-image:url(../images/misc/7.png);}
+.blog-nav{		background-image:url(../images/misc/11.png);}
+.call-nav{		background-image:url(../images/misc/9.png);}
+.mail-nav{		background-image:url(../images/misc/10.png);}
+.text-nav{		background-image:url(../images/misc/13.png);}
+
+.small-icons div:first-child{
+	margin-left:30px;
+}
+
+.small-icons{
+	padding-top:10px;
+	width:250px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.small-nav-icon{
+	overflow:visible;
+	width:50px;
+	height:80px;
+	margin-left:10px;
+	margin-right:10px;
+	float:left;
+	margin-bottom:25px;
+}
+
+.small-nav-icon a{
+	background-repeat:no-repeat;
+	background-position:center center;
+	background-size:20px 20px;
+	overflow:visible;
+	width:35px;
+	height:35px;
+	background-color:rgba(59,64,67,1);	
+	border-radius:50px;
+	margin-left:6px;
+	text-align:center;
+}
+
+.small-nav-icon em{
+	font-family:'Dosis', sans-serif;
+	color:rgba(59,64,67,1);	
+	text-align:center;
+	width:47px;
+	display:block;
+	font-style:normal;
+	padding-top:5px;
+}
+
+.small-facebook-nav{background-image:url(../images/misc/14.png);}
+.small-twitter-nav{	background-image:url(../images/misc/15.png);}
+.small-close-nav{	background-image:url(../images/misc/12.png);}
+
+
+.logo{
+	margin-top:20px;
+	margin-bottom:25px;
+	margin-left:20px;
+	float:left;
+}
+
+.deploy-navigation{
+	background-image:url(../images/misc/deploy-nav-round.png);
+	background-repeat:no-repeat;
+	width:25px;
+	height:25px;
+	background-size:25px 25px;
+	float:right;
+	margin-right:20px;
+	margin-top:20px;
+}
+
+.navigation-header img{
+	width:103px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:20px;
+}
+
+.navigation-header em{
+	display:block;
+	text-align:center;
+	font-size:10px;
+	color:rgba(59,64,67,1);	
+	font-style:normal;
+	margin-top:5px;
+	margin-bottom:15px;
+}
+
+@media screen and (min-width: 767px) {
+
+	.page-navigation{
+		display:none;
+		width:340px!important;
+		margin-left:auto;
+		margin-right:auto;
+		z-index:99999;
+	}
+	
+	.nav-icon{
+		width:60px!important;
+		height:102px!important;
+		margin-left:25px;
+		margin-right:25px;
+		float:left;
+		margin-bottom:15px!important;
+	}
+	
+	.nav-icon a:hover{
+		background-color:rgba(59,64,67,1);	
+	}
+	
+	.nav-icon a{
+		background-repeat:no-repeat;
+		background-size:30px 30px;
+		background-position:center center;	
+		overflow:visible;
+		width:60px!important;
+		height:60px!important;
+		background-color:rgba(59,64,67,1);	
+		border-radius:50px;
+		text-align:center;
+	}
+	
+	.nav-icon em{
+		font-family:'Dosis', sans-serif;
+		color:rgba(59,64,67,1);	
+		text-align:center;
+		width:65px!important;
+		display:block;
+		font-style:normal;
+		padding-top:5px;
+	}
+
+	.small-icons div:first-child{
+		margin-left:30px;
+	}
+	
+	.small-icons{
+		padding-top:10px;
+		width:350px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	
+	.small-nav-icon{
+		overflow:visible;
+		width:90px;
+		height:100px;
+		margin-left:10px;
+		margin-right:10px;
+		float:left;
+		margin-bottom:25px;
+	}
+	
+	.small-nav-icon a{
+		background-repeat:no-repeat;
+		background-position:center;
+		background-size:30px 30px;
+		overflow:visible;
+		width:65px;
+		height:65px;
+		background-color:rgba(59,64,67,1);	
+		border-radius:50px;
+		margin-left:6px;
+		text-align:center;
+	}
+	
+	.small-nav-icon em{
+		font-family:'Dosis', sans-serif;
+		color:rgba(59,64,67,1);	
+		text-align:center;
+		width:70px;
+		display:block;
+		font-style:normal;
+		padding-top:15px;
+	}
+
+	
+}
+
+
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-width : 400px) {
+	.page-navigation{
+		display:none;
+		width:410px;
+		margin-left:auto;
+		margin-right:auto;
+		z-index:99999;
+	}
+	
+	.nav-icon{
+		width:50px;
+		height:72px;
+		margin-left:25px;
+		margin-right:25px;
+		float:left;
+		margin-bottom:35px;
+	}
+	
+	.nav-icon a:hover{
+		background-color:rgba(59,64,67,1);	
+	}
+	
+	.nav-icon a{
+		background-repeat:no-repeat;
+		background-size:30px 30px;
+		background-position:center center;	
+		overflow:visible;
+		width:50px;
+		height:50px;
+		background-color:rgba(59,64,67,1);	
+		border-radius:50px;
+		text-align:center;
+	}
+	
+	.nav-icon em{
+		font-family:'Dosis', sans-serif;
+		color:#FFFFFF;
+		text-align:center;
+		width:55px;
+		display:block;
+		font-style:normal;
+		padding-top:5px;
+	}
+
+	.small-icons div:first-child{
+		margin-left:30px;
+	}
+	
+	.small-icons{
+		padding-top:10px;
+		width:300px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	
+	.small-nav-icon{
+		overflow:visible;
+		width:70px;
+		height:80px;
+		margin-left:10px;
+		margin-right:10px;
+		float:left;
+		margin-bottom:25px;
+	}
+	
+	.small-nav-icon a{
+		background-repeat:no-repeat;
+		background-position:center;
+		background-size:30px 30px;
+		overflow:visible;
+		width:35px;
+		height:35px;
+		background-color:rgba(59,64,67,1);	
+		border-radius:50px;
+		margin-left:6px;
+		text-align:center;
+	}
+	
+	.small-nav-icon em{
+		font-family:'Dosis', sans-serif;
+		color:rgba(59,64,67,1);	
+		text-align:center;
+		width:47px;
+		display:block;
+		font-style:normal;
+		padding-top:15px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
