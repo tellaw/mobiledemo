@@ -1,7 +1,7 @@
 var tellaw_dao = {
 
     populate: function() {
-
+        /*
         console.log ("Sending JSON request");
 
         $.ajax({
@@ -19,11 +19,11 @@ var tellaw_dao = {
         });
 
         console.log ("End of JSON request");
-
+*/
     },
 
     writeHTMLPost: function ( jsonresponse ) {
-
+/*
         alert ("Json response");
 
         for (var i in jsonresponse.posts) {
@@ -31,7 +31,7 @@ var tellaw_dao = {
         }
 
         alert (output);
-
+ */
     }
 
 }
