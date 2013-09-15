@@ -1,7 +1,9 @@
+angular.module('app', ['ngSanitize']);
+
 var tellaw_dao = {
 
     populate: function() {
-        /*
+
         console.log ("Sending JSON request");
 
         $.ajax({
@@ -19,19 +21,63 @@ var tellaw_dao = {
         });
 
         console.log ("End of JSON request");
-*/
+
     },
 
     writeHTMLPost: function ( jsonresponse ) {
-/*
-        alert ("Json response");
 
-        for (var i in jsonresponse.posts) {
-            output+="<li>post"+i+"</li>";
+        //$scope.post.posts.push = jsonresponse;
+
+        var scope = angular.element($("#postSlots")).scope();
+        scope.$apply(function(){
+            scope.content = jsonresponse;
+        })
+
+        updateLocalDb( jsonresponse );
+
+        console.log ("Json get Success");
+
+    }
+
+}
+
+function DataController($scope) {
+    $scope.post = {
+        content: [
+
+        ]
+    };
+}
+
+function updateLocalDb ( jsonresponse ) {
+
+    jQuery.each(jsonresponse.posts, function() {
+
+        if ( !isArticleInDb( this.id ) ) {
+
+            // Article is not in local storage, insert
+
         }
 
-        alert (output);
- */
-    }
+        console.log ( "ID is : " + this.id );
+    });
+
+}
+
+function isArticleInDb ( $articleId ) {
+
+}
+
+function writeArticle ( $jsonArticle, $articleid ) {
+
+}
+
+function getArticle ( $articleId ) {
+
+}
+
+function getArticlesForHome () {
+
+
 
 }
