@@ -1,6 +1,5 @@
-<div id="postSlots" ng-controller="DataController">
+<div id="slotDetail" ng-controller="DetailController">
     <div id="templater" style="display:block" ng-repeat="post in content.posts" >
-        <h1>Test</h1>
         <div id="postTemplate">
             <div class="container">
                 <div class="blog-post">
@@ -15,15 +14,8 @@
                         </div>
                     </div>
 
-                    <div class="post-details">
-                        <!--<a class="posted-by" href="#">admin</a>
-                        <a class="posted-at" href="#">2 days ago</a>
-                        <a class="posted-cat" href="#">HTML5 / CSS3</a>
-                        <a class="posted-tag" href="#">framework, devs</a>-->
-                        <a class="posted-more" href="blog.html?articleid={{post.id}}">Lire l'article</a>
-                        <div class="clear">
-                        </div>
-                    </div>
+                    <div ng-bind-html-unsafe="post.content"></div>
+
                 </div>
             </div>
             <div class="decoration"></div>

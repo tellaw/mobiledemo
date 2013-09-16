@@ -1,5 +1,6 @@
 angular.module('app', ['ngSanitize']);
 
+
 var tellaw_dao = {
 
     populate: function() {
@@ -37,18 +38,64 @@ var tellaw_dao = {
 
         console.log ("Json get Success");
 
+    },
+
+    initApplication: function() {
+
+        // Open the database of the application
+        console.log ("Opening databse");
+        var db = window.openDatabase("newsAppDb", "1.0", "Application DB", 1000000);
+
+        //tx.executeSql('DROP TABLE IF EXISTS DEMO');
+
+        console.log (db);
+
     }
 
 }
 
+/**
+ * Routing & Controllers for Angular
+ */
+var newsAppServices = angular.module('NewsAPP', []);
+
+// Set up our mappings between URLs, templates, and controllers
+function newsAppRouteConfig($routeProvider) { $routeProvider.
+    when('/', {
+        controller: DataController,
+        templateUrl: 'partial-index.html'
+    }).
+    // Notice that for the detail view, we specify a parameterized URL component
+    // by placing a colon in front of the id
+    when('/view/:id', {
+        controller: DetailController,
+        templateUrl: 'detail.html'
+    }).
+    otherwise({
+        redirectTo: '/'
+    });
+}
+// Set up our route so the AMail service can find it
+newsAppServices.config(newsAppRouteConfig);
+
 function DataController($scope) {
     $scope.post = {
-        content: [
-
-        ]
+        content: []
     };
 }
 
+function DetailController($scope, $routeParams) {
+    $scope.contentId = $routeParams.id;
+
+    $scope.post = {
+        content: []
+    };
+
+}
+
+/**
+ * Functions used to manage local storage
+ */
 function updateLocalDb ( jsonresponse ) {
 
     jQuery.each(jsonresponse.posts, function() {
@@ -56,6 +103,8 @@ function updateLocalDb ( jsonresponse ) {
         if ( !isArticleInDb( this.id ) ) {
 
             // Article is not in local storage, insert
+            console.log( this );
+            writeArticle ( this.id, this );
 
         }
 
@@ -65,6 +114,8 @@ function updateLocalDb ( jsonresponse ) {
 }
 
 function isArticleInDb ( $articleId ) {
+
+    return false;
 
 }
 

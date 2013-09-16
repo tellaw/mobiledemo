@@ -1,4 +1,4 @@
-<html !DOCTYPE ng-app>
+<html !DOCTYPE ng-app="NewsAPP">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!--Declare page as mobile friendly -->
@@ -56,6 +56,7 @@
         document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady() {
             tellaw_dao.populate();
+            tellaw_dao.initApplication();
         }
     </script>
 
@@ -160,41 +161,10 @@
             <div class="decoration"></div>
 
 
-            <div class="blog-responsive no-bottom"  ng-controller="DataController">
-                <div class="blog-content-responsive" id="postSlots">
+            <div class="blog-responsive no-bottom">
 
-                    <div id="templater" style="display:block" ng-repeat="post in content.posts" >
+                <div class="blog-content-responsive" ng-view></div>
 
-                        <div id="postTemplate">
-                            <div class="container">
-                                <div class="blog-post">
-                                    <!--<div class="post-image">
-                                        <img class="blog-post-image" src="images/blog/1.jpg" alt="img">
-                                    </div>-->
-                                    <img class="blog-post-image" src="{{post.thumbnail_images.full.url}}" alt="img">
-                                    <div class="post-content">
-                                        <h5 class="uppercase" ng-bind-html-unsafe="post.title"></h5>
-                                        <div ng-bind-html-unsafe="post.excerpt">
-
-                                         </div>
-                                    </div>
-
-                                    <div class="post-details">
-                                        <!--<a class="posted-by" href="#">admin</a>
-                                        <a class="posted-at" href="#">2 days ago</a>
-                                        <a class="posted-cat" href="#">HTML5 / CSS3</a>
-                                        <a class="posted-tag" href="#">framework, devs</a>-->
-                                        <a class="posted-more" href="blog.html?articleid={{post.id}}">Lire l'article</a>
-                                        <div class="clear">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="decoration"></div>
-                        </div>
-                    </div>
-
-                </div>
             <div class="decoration"></div>
             <p class="center-text copyright">Copyright 2013. Tellaw.org All rights reserved!</p>
 
