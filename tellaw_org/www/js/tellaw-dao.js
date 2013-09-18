@@ -157,12 +157,12 @@ function isArticleInDbQuerySuccess(tx, results) {
 function writeArticle ( $articleid, $jsonArticle ) {
 
     console.log ( "Writing article..." );
-console.log ("--> JSON --> "+JSON.stringify($jsonArticle));
+    console.log ("--> JSON --> "+JSON.stringify($jsonArticle));
 
-    var $sql = 'INSERT INTO POSTS (id, data) VALUES ('+$articleid+', "'+ addslashes(JSON.stringify($jsonArticle))+'")';
+    var $sql = 'INSERT INTO POSTS (id, data) VALUES (?,?)';
     console.log ($sql);
     db.transaction( function (tx) {
-        return tx.executeSql( $sql );
+        return tx.executeSql( $sql, [$articleid,JSON.stringify($jsonArticle)] );
     } , errorCB);
 
     console.log ("article has been written");
