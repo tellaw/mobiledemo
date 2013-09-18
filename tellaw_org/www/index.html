@@ -55,6 +55,7 @@
         app.initialize();
         document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady() {
+            console.log ("-----------------------> onDeviceReady");
             tellaw_dao.populate();
             tellaw_dao.initApplication();
         }
