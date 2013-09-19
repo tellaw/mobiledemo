@@ -1,20 +1,21 @@
 <div id="slotDetail" ng-controller="DetailController">
-    <div id="templater" style="display:block" ng-repeat="post in content.posts" >
+    <h1>{{contentId}}</h1>
+    <div id="templater" style="display:block" >
         <div id="postTemplate">
             <div class="container">
                 <div class="blog-post">
                     <!--<div class="post-image">
                         <img class="blog-post-image" src="images/blog/1.jpg" alt="img">
                     </div>-->
-                    <img class="blog-post-image" src="{{post.thumbnail_images.full.url}}" alt="img">
+                    <img class="blog-post-image" src="{{thumbnail_images.full.url}}" alt="img">
                     <div class="post-content">
-                        <h5 class="uppercase" ng-bind-html-unsafe="post.title"></h5>
-                        <div ng-bind-html-unsafe="post.excerpt">
+                        <h5 class="uppercase" ng-bind-html-unsafe="title"></h5>
+                        <div ng-bind-html-unsafe="excerpt">
 
                         </div>
                     </div>
 
-                    <div ng-bind-html-unsafe="post.content"></div>
+                    <div ng-bind-html-unsafe="content"></div>
 
                 </div>
             </div>

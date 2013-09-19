@@ -49,7 +49,7 @@ var tellaw_dao = {
         console.log ("Opening databse");
 
         db.transaction( function (tx) {
-            tx.executeSql('DROP TABLE IF EXISTS POSTS');
+            //tx.executeSql('DROP TABLE IF EXISTS POSTS');
             tx.executeSql('CREATE TABLE IF NOT EXISTS POSTS (id unique, data)');
         }, errorCB, successCB);
         //tx.executeSql('DROP TABLE IF EXISTS DEMO');
@@ -85,17 +85,27 @@ function newsAppRouteConfig($routeProvider) { $routeProvider.
 newsAppServices.config(newsAppRouteConfig);
 
 function DataController($scope) {
+
+    console.log ("Start of DataController");
+
     $scope.post = {
         content: []
     };
+
+    console.log ("End of DataController");
 }
 
 function DetailController($scope, $routeParams) {
+
+    console.log ("Start of DetailController");
+
     $scope.contentId = $routeParams.id;
 
     $scope.post = {
-        content: []
+        content: getArticle( $routeParams.id )
     };
+
+    console.log ("End of DetailController");
 
 }
 
@@ -152,7 +162,20 @@ function isArticleInDbQuerySuccess(tx, results) {
     return true;
 }
 
+function getArticleInDbQuerySuccess(tx, results) {
+    console.log("getArticleInDbQuerySuccess : Returned rows = " + results.rows.length);
 
+    // this will be true since it was a select statement and so rowsAffected was 0
+    if (results.rows.length == 0) {
+        console.log ("no rows");
+        return false;
+    }
+
+    //console.log("getArticleInDbQuerySuccess : Returned data = " );
+    //console.log(results.rows.item(0).data);
+
+    return results.rows.item(0).data;
+}
 
 function writeArticle ( $articleid, $jsonArticle ) {
 
@@ -175,10 +198,13 @@ function addslashes( str ) {
 
 function getArticle ( $articleId ) {
 
-}
-
-function getArticlesForHome () {
-
-
+    var $sql = "SELECT * FROM POSTS WHERE id="+$articleId;
+    console.log ("///**** Get Article ****//////");
+    console.log ($sql);
+    var $value = db.transaction( function (tx) {
+        return tx.executeSql ( $sql, [], getArticleInDbQuerySuccess, errorCB );
+    }, errorCB);
+    console.log ("///**** END OF Get Article ****//////");
+    return $value;
 
 }
