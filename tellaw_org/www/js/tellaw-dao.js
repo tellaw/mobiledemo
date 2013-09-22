@@ -1,65 +1,6 @@
 angular.module('app', ['ngSanitize']);
 var db = window.openDatabase("newsAppDb", "1.0", "Application DB", 1000000);
 
-var tellaw_dao = {
-
-    populate: function() {
-
-        console.log ("Sending JSON request");
-
-        $.ajax({
-            type       : "POST",
-            //url        : 'http://www.tellaw.org?json=1',
-            url        : 'default.json',
-            crossDomain: true,
-            dataType   : 'json',
-            success    : function(response) {
-                console.log(response);
-                tellaw_dao.writeHTMLPost(response);
-            },
-            error      : function() {
-                console.error("error");
-            }
-        });
-
-        console.log ("End of JSON request");
-
-    },
-
-    writeHTMLPost: function ( jsonresponse ) {
-
-        //$scope.post.posts.push = jsonresponse;
-
-        console.log ("JSon received, updating");
-
-        var scope = angular.element($("#postSlots")).scope();
-        scope.$apply(function(){
-            scope.content = jsonresponse;
-        })
-
-        updateLocalDb( jsonresponse );
-
-        console.log ("Update is done...");
-
-    },
-
-    initApplication: function() {
-
-        // Open the database of the application
-        console.log ("Opening databse");
-
-        db.transaction( function (tx) {
-            //tx.executeSql('DROP TABLE IF EXISTS POSTS');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS POSTS (id unique, data)');
-        }, errorCB, successCB);
-        //tx.executeSql('DROP TABLE IF EXISTS DEMO');
-
-        console.log (db);
-
-    }
-
-}
-
 /**
  * Routing & Controllers for Angular
  */
@@ -85,34 +26,102 @@ function newsAppRouteConfig($routeProvider) { $routeProvider.
 newsAppServices.config(newsAppRouteConfig);
 
 function DataController($scope) {
-
-    console.log ("Start of DataController");
+    console.log ("<< ==== Start of DataController ==== >>");
+    tellaw_news_home.populateArticles();
 
     $scope.post = {
         content: []
     };
-
-    console.log ("End of DataController");
+    console.log ("<< ==== End of DataController ==== >>");
 }
 
 function DetailController($scope, $routeParams) {
-
-    console.log ("Start of DetailController");
-
+    console.log ("<< ==== Start of DetailController ==== >>");
     $scope.contentId = $routeParams.id;
 
-    $scope.post = {
-        content: getArticle( $routeParams.id )
-    };
+    // Load article from DB
+    getArticle( $routeParams.id );
 
-    console.log ("End of DetailController");
+    // If content part is empty, load the full article
+    $scope.post = {
+        content:[]
+    };
+    console.log ("<< ==== End of DetailController ==== >>");
+}
+
+var tellaw_new_detail = {
+
+    getArticleDetail : function () {
+        
+    },
+
+    isArticlecomplete : function () {
+
+    }
+
+
 
 }
 
-/**
- * Functions used to manage local storage
- */
-function updateLocalDb ( jsonresponse ) {
+var tellaw_news_home = {
+
+    populateArticles: function() {
+
+        console.log ("--> tellaw_news_home.populate()");
+
+        $.ajax({
+            type       : "POST",
+            url        : 'http://www.tellaw.org?json=1',
+            //url        : 'default.json',
+            crossDomain: true,
+            dataType   : 'json',
+            success    : function(response) {
+                console.log(response);
+                tellaw_news_home.writeArticlesHTMLPost(response);
+            },
+            error      : function() {
+                console.error("error");
+            }
+        });
+
+        console.log ("End of JSON request");
+
+    },
+
+    writeArticlesHTMLPost: function ( jsonresponse ) {
+
+        console.log ("--> tellaw_news_home.writeHTMLPost()");
+
+        var scope = angular.element($("#postSlots")).scope();
+        scope.$apply(function(){
+            scope.content = jsonresponse;
+        })
+
+        tellaw_news_home.updateLocalDbForList( jsonresponse );
+
+        console.log ("Update is done...");
+
+    },
+
+    initApplication: function() {
+
+        // Open the database of the application
+        console.log ("--> tellaw_news_home.initApplication()");
+
+        db.transaction( function (tx) {
+            //tx.executeSql('DROP TABLE IF EXISTS POSTS');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS POSTS (id unique, data)');
+        }, errorCB, successCB);
+        //tx.executeSql('DROP TABLE IF EXISTS DEMO');
+
+        console.log (db);
+
+    }
+
+    /**
+     * Functions used to manage local storage
+     */
+    function updateLocalDbForList ( jsonresponse ) {
 
     jQuery.each(jsonresponse.posts, function() {
 
@@ -127,6 +136,7 @@ function updateLocalDb ( jsonresponse ) {
         console.log ( "ID is : " + this.id );
     });
 
+
 }
 
 function errorCB(err) {
@@ -135,53 +145,30 @@ function errorCB(err) {
 }
 
 function successCB() {
-    console.log("success in DB creation!");
+    //console.log("success in DB creation!");
 }
 
+/**
+ * Shared functions used for all pages
+ */
 
 function isArticleInDb ( $articleId ) {
-
     var $sql = "SELECT * FROM POSTS WHERE id="+$articleId;
-
-    console.log ($sql);
-
     var $value = db.transaction( function (tx) {
         return tx.executeSql ( $sql, [], isArticleInDbQuerySuccess, errorCB );
     }, errorCB);
-
     return $value;
-
 }
-function isArticleInDbQuerySuccess(tx, results) {
-    console.log("Returned rows = " + results.rows.length);
 
+function isArticleInDbQuerySuccess(tx, results) {
     // this will be true since it was a select statement and so rowsAffected was 0
-    if (!results.rowsAffected) {
+    if (results.rows.length==0) {
         return false;
     }
     return true;
 }
 
-function getArticleInDbQuerySuccess(tx, results) {
-    console.log("getArticleInDbQuerySuccess : Returned rows = " + results.rows.length);
-
-    // this will be true since it was a select statement and so rowsAffected was 0
-    if (results.rows.length == 0) {
-        console.log ("no rows");
-        return false;
-    }
-
-    //console.log("getArticleInDbQuerySuccess : Returned data = " );
-    //console.log(results.rows.item(0).data);
-
-    return results.rows.item(0).data;
-}
-
 function writeArticle ( $articleid, $jsonArticle ) {
-
-    console.log ( "Writing article..." );
-    console.log ("--> JSON --> "+JSON.stringify($jsonArticle));
-
     var $sql = 'INSERT INTO POSTS (id, data) VALUES (?,?)';
     console.log ($sql);
     db.transaction( function (tx) {
@@ -189,22 +176,23 @@ function writeArticle ( $articleid, $jsonArticle ) {
     } , errorCB);
 
     console.log ("article has been written");
-
-}
-
-function addslashes( str ) {
-    return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
 }
 
 function getArticle ( $articleId ) {
-
     var $sql = "SELECT * FROM POSTS WHERE id="+$articleId;
     console.log ("///**** Get Article ****//////");
     console.log ($sql);
-    var $value = db.transaction( function (tx) {
+    db.transaction( function (tx) {
         return tx.executeSql ( $sql, [], getArticleInDbQuerySuccess, errorCB );
     }, errorCB);
     console.log ("///**** END OF Get Article ****//////");
-    return $value;
+}
 
+// Callback for getArticle
+function getArticleInDbQuerySuccess(tx, results) {
+    var scope = angular.element($("#slotDetail")).scope();
+    scope.$apply(function(){
+        //console.log( JSON.parse( results.rows.item(0).data) );
+        scope.post.content = JSON.parse( results.rows.item(0).data);
+    })
 }

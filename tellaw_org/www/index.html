@@ -55,9 +55,8 @@
         app.initialize();
         document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady() {
-            console.log ("-----------------------> onDeviceReady");
-            tellaw_dao.populate();
-            tellaw_dao.initApplication();
+            console.log ("-----------------------> onDeviceReady Event");
+            tellaw_news_home.initApplication();
         }
     </script>
 
@@ -83,7 +82,7 @@
             <em>PLEASE SELECT AN ITEM</em>
         </div>
         <div class="nav-icon">
-            <a href="index.html" class="home-nav"></a>
+            <a href="#/" class="home-nav"></a>
             <em>HOME</em>
         </div>
         <div class="nav-icon">
