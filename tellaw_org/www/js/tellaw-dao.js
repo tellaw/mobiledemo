@@ -26,17 +26,17 @@ function newsAppRouteConfig($routeProvider) { $routeProvider.
 newsAppServices.config(newsAppRouteConfig);
 
 function DataController($scope) {
-    console.log ("<< ==== Start of DataController ==== >>");
+    tellaw_core.log ("<< ==== Start of DataController ==== >>");
     tellaw_news_home.populateArticles();
 
     $scope.post = {
         content: []
     };
-    console.log ("<< ==== End of DataController ==== >>");
+    tellaw_core.log ("<< ==== End of DataController ==== >>");
 }
 
 function DetailController($scope, $routeParams) {
-    console.log ("<< ==== Start of DetailController ==== >>");
+    tellaw_core.log ("<< ==== Start of DetailController ==== >>");
     $scope.contentId = $routeParams.id;
 
     // Load article from DB
@@ -46,7 +46,7 @@ function DetailController($scope, $routeParams) {
     $scope.post = {
         content:[]
     };
-    console.log ("<< ==== End of DetailController ==== >>");
+    tellaw_core.log ("<< ==== End of DetailController ==== >>");
 }
 
 var tellaw_new_detail = {
@@ -63,11 +63,21 @@ var tellaw_new_detail = {
 
 }
 
+var tellaw_core = {
+
+    log : function( $str ) {
+        console.log( $str );
+    },
+
+    error : function( $str ) {
+        console.error( $str );
+    }
+
+}
+
 var tellaw_news_home = {
 
     populateArticles: function() {
-
-        console.log ("--> tellaw_news_home.populate()");
 
         $.ajax({
             type       : "POST",
@@ -76,21 +86,17 @@ var tellaw_news_home = {
             crossDomain: true,
             dataType   : 'json',
             success    : function(response) {
-                console.log(response);
+                tellaw_core.log(response);
                 tellaw_news_home.writeArticlesHTMLPost(response);
             },
             error      : function() {
-                console.error("error");
+                tellaw_core.error("error");
             }
         });
-
-        console.log ("End of JSON request");
 
     },
 
     writeArticlesHTMLPost: function ( jsonresponse ) {
-
-        console.log ("--> tellaw_news_home.writeHTMLPost()");
 
         var scope = angular.element($("#postSlots")).scope();
         scope.$apply(function(){
@@ -99,53 +105,65 @@ var tellaw_news_home = {
 
         tellaw_news_home.updateLocalDbForList( jsonresponse );
 
-        console.log ("Update is done...");
-
     },
 
     initApplication: function() {
 
-        // Open the database of the application
-        console.log ("--> tellaw_news_home.initApplication()");
-
         db.transaction( function (tx) {
-            //tx.executeSql('DROP TABLE IF EXISTS POSTS');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS POSTS (id unique, data)');
-        }, errorCB, successCB);
-        //tx.executeSql('DROP TABLE IF EXISTS DEMO');
+            tx.executeSql('DROP TABLE IF EXISTS POSTS');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS POSTS (id Varchar default NULL, data Text)');
+        }, errorCreationDB, successCreationDB);
 
-        console.log (db);
-
-    }
+    },
 
     /**
      * Functions used to manage local storage
      */
-    function updateLocalDbForList ( jsonresponse ) {
+     updateLocalDbForList : function ( jsonresponse ) {
 
-    jQuery.each(jsonresponse.posts, function() {
+        jQuery.each(jsonresponse.posts, function() {
 
-        if ( !isArticleInDb( this.id ) ) {
+            if ( !isArticleInDb( this.id ) ) {
 
-            // Article is not in local storage, insert
-            console.log( this );
-            writeArticle ( this.id, this );
+                // Article is not in local storage, insert
+                writeArticle ( this.id, this );
 
-        }
+            } else {
 
-        console.log ( "ID is : " + this.id );
-    });
+                tellaw_core.log( "article is already in database" );
 
+            }
+
+        });
+
+    }
 
 }
 
+function errorCreationDB(err) {
+    tellaw_core.error("[ERROR CREATION DB] - Error processing SQL request ");
+}
 function errorCB(err) {
-    console.error("Error processing SQL: ");
-    console.error (err);
+    tellaw_core.error("1 - Error processing SQL: ");
+    tellaw_core.error (err);
 }
 
+function errorCB2(err) {
+    tellaw_core.error("2 - Error processing SQL: ");
+    tellaw_core.error (err);
+}
+
+function errorCB3(err) {
+    tellaw_core.error("3 - Error processing SQL: ");
+    tellaw_core.error (err);
+}
+
+
+function successCreationDB() {
+    tellaw_core.log("success in DB creation!");
+}
 function successCB() {
-    //console.log("success in DB creation!");
+    //tellaw_core.log("success in DB creation!");
 }
 
 /**
@@ -154,6 +172,7 @@ function successCB() {
 
 function isArticleInDb ( $articleId ) {
     var $sql = "SELECT * FROM POSTS WHERE id="+$articleId;
+    tellaw_core.log ($sql);
     var $value = db.transaction( function (tx) {
         return tx.executeSql ( $sql, [], isArticleInDbQuerySuccess, errorCB );
     }, errorCB);
@@ -169,30 +188,25 @@ function isArticleInDbQuerySuccess(tx, results) {
 }
 
 function writeArticle ( $articleid, $jsonArticle ) {
-    var $sql = 'INSERT INTO POSTS (id, data) VALUES (?,?)';
-    console.log ($sql);
+    var $sql = 'INSERT INTO POSTS (id, data) VALUES ('+$articleid+',?)';
+    tellaw_core.log ($sql);
     db.transaction( function (tx) {
-        return tx.executeSql( $sql, [$articleid,JSON.stringify($jsonArticle)] );
-    } , errorCB);
-
-    console.log ("article has been written");
+        return tx.executeSql( $sql, [JSON.stringify( $jsonArticle )] );
+    } , errorCB2);
 }
 
 function getArticle ( $articleId ) {
     var $sql = "SELECT * FROM POSTS WHERE id="+$articleId;
-    console.log ("///**** Get Article ****//////");
-    console.log ($sql);
+    tellaw_core.log ($sql);
     db.transaction( function (tx) {
         return tx.executeSql ( $sql, [], getArticleInDbQuerySuccess, errorCB );
-    }, errorCB);
-    console.log ("///**** END OF Get Article ****//////");
+    }, errorCB3);
 }
 
 // Callback for getArticle
 function getArticleInDbQuerySuccess(tx, results) {
     var scope = angular.element($("#slotDetail")).scope();
     scope.$apply(function(){
-        //console.log( JSON.parse( results.rows.item(0).data) );
         scope.post.content = JSON.parse( results.rows.item(0).data);
     })
 }
