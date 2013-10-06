@@ -49,15 +49,22 @@
     <script src="scripts/framework.js"		type="text/javascript"></script>
 
     <script src="js/angular.min.js" 		type="text/javascript"></script>
+    <script src="js/tellaw-app.js"     		type="text/javascript"></script>
     <script src="js/tellaw-dao.js"     		type="text/javascript"></script>
 
     <script type="text/javascript">
         app.initialize();
         document.addEventListener("deviceready", onDeviceReady, false);
-        function onDeviceReady() {
+        function onDeviceReady( $scope ) {
             console.log ("-----------------------> onDeviceReady Event");
-            tellaw_news_home.initApplication();
+            //tellaw_news_home.initApplication( $scope );
         }
+
+        $( document ).ready(function($scope) {
+            // Handler for .ready() called.
+
+        });
+
     </script>
 
 </head>
