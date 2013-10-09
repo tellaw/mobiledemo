@@ -19,10 +19,10 @@ newsApp.controller ('homeController', ['$scope', function($scope) {
     console.log ("<< ==== Start of DataController ==== >>");
 
     var $webSqlPostStore = new WebSqlPostStore();
-alert ($webSqlPostStore.findHomePosts());
+
     $scope.name = "home";
     $scope.post = {
-        content: []
+        content: $webSqlPostStore.findHomePosts()
     };
 
     console.log ("<< ==== End of DataController ==== >>");

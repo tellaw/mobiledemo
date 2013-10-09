@@ -68,7 +68,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
     this.findHomePosts = function ( $scope ) {
         this.db.transaction(
 
-            $toto = function(tx) {
+            function(tx) {
 
                 console.log ("homePostsStarted");
 
@@ -86,19 +86,15 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
                         $dataJson.posts.push = value;
                     } );
 
-                    return "test";
-                    /*
+                    var $scope = angular.element($("#postSlots")).scope();
+                    //console.log (angular.element($("#postSlots")).scope());
+                    $scope.$apply(function(){
+                        $scope.post.content = $dataJson;
+                    })
 
-
-                                        var $scope = angular.element($("#postSlots")).scope();
-                                        //console.log (angular.element($("#postSlots")).scope());
-                                        $scope.$apply(function(){
-                                            $scope.post.content = $dataJson;
-                                        })
-                    */
                 });
 
-            return $toto;
+
 
             },
             function(error) {
@@ -106,7 +102,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
             }
         );
 
-        return $toto;
+
     };
 
 
