@@ -25,7 +25,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
         console.log ("Creating table for POSTS");
 
-        tx.executeSql('DROP TABLE IF EXISTS posts');
+        // tx.executeSql('DROP TABLE IF EXISTS posts');
 
         var sql = "CREATE TABLE IF NOT EXISTS posts ( " +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -83,18 +83,23 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
                     var $dataJson = { "posts" : {} };
                     //this.updateHomeModel (results.rows.length > 0 ? results.rows.item(0) : null);
                     angular.forEach ( results.rows , function ( value, key ) {
-                        $dataJson.posts.push = value;
+                        console.log ("article readen from DB");
+                        console.log ( results.rows.item(key) );
+
+                        $postItem = results.rows.item(key);
+
+                        $dataJson.posts[$postItem.id] = $postItem;
                     } );
+
+                    console.log ($dataJson);
 
                     var $scope = angular.element($("#postSlots")).scope();
                     //console.log (angular.element($("#postSlots")).scope());
                     $scope.$apply(function(){
-                        $scope.post.content = $dataJson;
+                        $scope.content = $dataJson;
                     })
 
                 });
-
-
 
             },
             function(error) {
@@ -105,6 +110,46 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
     };
 
+    this.getArticle = function ( $articleId ) {
+
+        var $sql = "SELECT * FROM POSTS WHERE id="+$articleId;
+        tellaw_core.log ($sql);
+        this.db.transaction( function (tx) {
+            return tx.executeSql ( $sql, [],
+
+                function getArticleInDbQuerySuccess(tx, results) {
+                    var scope = angular.element($("#slotDetail")).scope();
+                    scope.$apply(function(){
+                        console.log (JSON.parse( results.rows.item(0).data));
+                        scope.post.content = JSON.parse( results.rows.item(0).data);
+                    })
+                }
+
+            );
+        });
+
+    };
+
+    this.isArticleInDb = function ( $articleId ) {
+        var $sql = "SELECT * FROM POSTS WHERE id="+$articleId;
+        tellaw_core.log ($sql);
+        var $value = this.db.transaction( function (tx) {
+            return tx.executeSql ( $sql, [], function (tx, results) {
+                //console.log ("isArticleInDb : " + results.rows.item(0));
+            } );
+        });
+        return $value;
+    };
+
+    this.writeArticle = function ( $articleid, $jsonArticle ) {
+        var $sql = 'INSERT INTO POSTS (id, data, title, excerpt, image) VALUES ('+$articleid+',?, ?, ?, ?)';
+        tellaw_core.log ($sql);
+        this.db.transaction( function (tx) {
+            return tx.executeSql(
+                $sql, [JSON.stringify( $jsonArticle ), $jsonArticle.title, $jsonArticle.excerpt, $jsonArticle.thumbnail]
+            );
+        } );
+    };
 
     this.initializeDatabase(successCallback, errorCallback);
 
