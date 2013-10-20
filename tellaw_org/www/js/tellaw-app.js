@@ -1,5 +1,6 @@
 angular.module('app', ['ngSanitize']);
 
+// Modules declarations
 var newsApp = angular.module('NewsAPP', []).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.
@@ -14,11 +15,17 @@ var newsApp = angular.module('NewsAPP', []).
             otherwise({redirectTo: '/phones'});
     }]);
 
+// Store creation
+var $webSqlPostStore = new WebSqlPostStore();
+
+// Events Declarations
+$scope.$on( "DETAIL_ARTICLE_NOT_LOADED_EVENT", $webSqlPostStore.loadDetailArticle() );
+
+// Controller declarations
 newsApp.controller ('homeController', ['$scope', function($scope) {
 
     console.log ("<< ==== Start of DataController ==== >>");
 
-    var $webSqlPostStore = new WebSqlPostStore();
     tellaw_news_home.populateArticles( $webSqlPostStore );
 
     $scope.name = "home";
@@ -43,8 +50,15 @@ newsApp.controller ('detailController', ['$scope', '$routeParams', function($sco
     };
 
     // Load article from DB
-    var $webSqlPostStore = new WebSqlPostStore();
+    //var $webSqlPostStore = new WebSqlPostStore();
     $webSqlPostStore.getArticle( $routeParams.id );
+
+    // validate if article is already stored. Load it if not already stored
+    if ( !$webSqlPostStore.isArticleFullyLoaded( $routeParams.id ) ) {
+
+        // Load article
+
+    }
 
     console.log ("<< ==== End of DetailController ==== >>");
 
@@ -102,18 +116,12 @@ var tellaw_news_home = {
     updateLocalDbForList : function ( jsonresponse , $webSqlPostStore ) {
 
         jQuery.each(jsonresponse.posts, function() {
-
             if ( !$webSqlPostStore.isArticleInDb( this.id ) ) {
-
                 // Article is not in local storage, insert
                 $webSqlPostStore.writeArticle ( this.id, this );
-
             } else {
-
                 tellaw_core.log( "article is already in database" );
-
             }
-
         });
 
     }

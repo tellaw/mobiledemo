@@ -151,6 +151,14 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
         } );
     };
 
+    this.isArticleFullyLoaded = function ( $articleId ) {
+
+    };
+
+    this.loadDetailArticle = function () {
+
+    }
+
     this.initializeDatabase(successCallback, errorCallback);
 
 }
