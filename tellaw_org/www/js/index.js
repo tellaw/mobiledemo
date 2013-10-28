@@ -40,3 +40,7 @@ var app = {
 
     }
 };
+
+function getAngularScope () {
+    return angular.element($("#postSlots")).scope();
+}

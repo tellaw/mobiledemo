@@ -58,13 +58,19 @@
         document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady( $scope ) {
 
+            // Device ready
             console.log ("-----------------------> onDeviceReady Event");
-            //tellaw_news_home.initApplication( $scope );
         }
 
         $( document ).ready(function($scope) {
-            // Handler for .ready() called.
+            // Jquery ready event
+            console.log ("-----------------------> JQuery ready Event");
 
+        });
+
+        angular.element(document).ready(function( $scope ) {
+            // Angular ready
+            console.log ("-----------------------> Angular ready Event");
         });
 
     </script>

@@ -25,14 +25,17 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
         console.log ("Creating table for POSTS");
 
-        // tx.executeSql('DROP TABLE IF EXISTS posts');
+        tx.executeSql('DROP TABLE IF EXISTS posts');
 
         var sql = "CREATE TABLE IF NOT EXISTS posts ( " +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "title VARCHAR(50), " +
             "image VARCHAR(50), " +
             "excerpt Text, " +
-            "data Text );";
+            "data Text," +
+            "updated DateTime," +
+            "created DateTime" +
+            " );";
 
         tx.executeSql(sql, null,
             function() {
@@ -133,20 +136,32 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
     this.isArticleInDb = function ( $articleId ) {
         var $sql = "SELECT * FROM POSTS WHERE id="+$articleId;
         tellaw_core.log ($sql);
-        var $value = this.db.transaction( function (tx) {
+
+        this.db.transaction( function (tx) {
             return tx.executeSql ( $sql, [], function (tx, results) {
-                //console.log ("isArticleInDb : " + results.rows.item(0));
+
+                $scope = getAngularScope();
+                if (results.rows.length) {
+                    console.log ("article "+$articleId+" is in DB");
+                    $scope.isArticleInDb = true;
+                } else {
+                    console.log ("article "+$articleId+" is NOT in DB");
+                    $scope.isArticleInDb = false;
+                }
+
             } );
         });
-        return $value;
     };
 
     this.writeArticle = function ( $articleid, $jsonArticle ) {
-        var $sql = 'INSERT INTO POSTS (id, data, title, excerpt, image) VALUES ('+$articleid+',?, ?, ?, ?)';
+        var $sql = 'INSERT INTO POSTS (id, data, title, excerpt, image, created, updated) VALUES ('+$articleid+',?, ?, ?, ?, ?, ?)';
         tellaw_core.log ($sql);
+
+        $d = new Date();
+
         this.db.transaction( function (tx) {
             return tx.executeSql(
-                $sql, [JSON.stringify( $jsonArticle ), $jsonArticle.title, $jsonArticle.excerpt, $jsonArticle.thumbnail]
+                $sql, [JSON.stringify( $jsonArticle ), $jsonArticle.title, $jsonArticle.excerpt, $jsonArticle.thumbnail, $d.getTime(),$d.getTime() ]
             );
         } );
     };
@@ -156,7 +171,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
     };
 
     this.loadDetailArticle = function () {
-
+        console.log ("load detail article : ") ;
     }
 
     this.initializeDatabase(successCallback, errorCallback);
