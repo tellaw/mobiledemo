@@ -8,6 +8,7 @@ var synchroManager = function(successCallback, errorCallback) {
         var self = this;
     }
 
+    // This is a comment
     this.addToQueue = function ( $item ) {
 
     }
