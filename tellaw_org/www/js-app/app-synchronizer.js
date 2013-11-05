@@ -1,22 +1,33 @@
 console.log ("Synchronizer file loaded");
 
-var synchroManager = function(successCallback, errorCallback) {
+var SynchroManager = function(successCallback, errorCallback) {
 
-    var queue = new Array();
+    this.$_queue = new Array();
+    this.$_processing = false;
 
     this.initialize = function(successCallback, errorCallback) {
         var self = this;
     }
 
     this.addToQueue = function ( $item ) {
-
+        this.$_queue.push( $item );
     }
 
-    this.processItem = function (  ) {
+    this.processOneItem = function (  ) {
+        if (this.$_queue.length > 0) {
+            $item = this.$_queue.get(0);
 
+            this.$_processing = true;
+            // Call Update function
+
+        }
     }
-
 
     this.initialize(successCallback, errorCallback);
 
+}
+
+var QueueItem = function ( $id, $url ) {
+    this.$id = $id;
+    this.$url = $url;
 }
