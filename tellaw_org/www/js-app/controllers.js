@@ -18,6 +18,7 @@ var newsApp = angular.module('NewsAPP', []).
 // Store creation
 var $webSqlPostStore = new WebSqlPostStore();
 var $localStorageStore = new LocalStorageStore();
+var $synchroManager = new SynchroManager();
 
 // Events Declarations
 function initAngularEvents ( $section ){

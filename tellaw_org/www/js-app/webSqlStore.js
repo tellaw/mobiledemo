@@ -25,7 +25,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
         console.log ("Creating table for POSTS");
 
-        //tx.executeSql('DROP TABLE IF EXISTS posts');
+        tx.executeSql('DROP TABLE IF EXISTS posts');
 
         var sql = "CREATE TABLE IF NOT EXISTS posts ( " +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
