@@ -39,12 +39,13 @@ newsApp.controller ('homeController', ['$scope', function($scope) {
     initAngularEvents( "home" );
 
     appListingComponent.populateArticles( $webSqlPostStore );
-
+    appDetailComponent.updateArticles();
+    
     $scope.name = "home";
     $scope.post = {
         content: $webSqlPostStore.findHomePosts()
     };
-
+    
     console.log ("<< ==== End of DataController ==== >>");
 
 }]);
@@ -65,14 +66,7 @@ newsApp.controller ('detailController', ['$scope', '$routeParams', function($sco
 
     // Load article from DB
     //var $webSqlPostStore = new WebSqlPostStore();
-    $webSqlPostStore.getArticle( $routeParams.id );
-
-    // validate if article is already stored. Load it if not already stored
-    if ( !$webSqlPostStore.isArticleFullyLoaded( $routeParams.id ) ) {
-
-        // Load article
-
-    }
+    $webSqlPostStore.getArticle( $routeParams.id, $scope );
 
     console.log ("<< ==== End of DetailController ==== >>");
 

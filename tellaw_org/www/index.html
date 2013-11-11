@@ -78,6 +78,7 @@
         angular.element(document).ready(function( $scope ) {
             // Angular ready
             console.log ("-----------------------> Angular ready Event");
+            appready();
         });
 
     </script>
@@ -109,47 +110,11 @@
         </div>
         <div class="nav-icon">
             <a href="intro.html" class="features-nav"></a>
-            <em>FEATURES</em>
-        </div>
-        <div class="nav-icon">
-            <a href="type.html" class="type-nav"></a>
-            <em>TYPE</em>
-        </div>
-        <div class="nav-icon">
-            <a href="jquery.html" class="jquery-nav"></a>
-            <em>JQUERY</em>
-        </div>
-        <div class="nav-icon">
-            <a href="other.html" class="others-nav"></a>
-            <em>OTHERS</em>
-        </div>
-        <div class="nav-icon">
-            <a href="blog.html" class="blog-nav"></a>
-            <em>BLOG</em>
-        </div>
-        <div class="nav-icon">
-            <a href="onecol.html" class="folios-nav"></a>
-            <em>FOLIO ONE</em>
-        </div>
-        <div class="nav-icon">
-            <a href="swipe.html" class="gallery-nav"></a>
-            <em>GALLERY</em>
-        </div>
-        <div class="nav-icon">
-            <a href="onecol.html" class="folios-nav"></a>
-            <em>FOLIO TWO</em>
-        </div>
-        <div class="nav-icon">
-            <a href="tel:+1 23 456 7890" class="call-nav"></a>
-            <em>CALL US</em>
-        </div>
-        <div class="nav-icon">
-            <a href="tel:+1 23 456 7890" class="text-nav"></a>
-            <em>TEXT US</em>
+            <em>CONFIGURATION</em>
         </div>
         <div class="nav-icon">
             <a href="contact.html" class="mail-nav"></a>
-            <em>MAIL US</em>
+            <em>CONTACTEZ-NOUS</em>
         </div>
         <div class="small-icons">
             <div class="small-nav-icon">
@@ -175,7 +140,7 @@
 
         <div class="header">
             <a class="logo" href="index.html">
-                <img src="images/logo2.png" alt="img" width="99">
+                <img src="images/logo2.png" alt="img">
             </a>
             <a class="deploy-navigation"></a>
         </div>
@@ -186,12 +151,73 @@
             <div class="blog-responsive no-bottom">
 
                 <div class="blog-content-responsive" ng-view></div>
-
+<!-- 
+          <div class="sidebar-responsive no-bottom">
+              <div class="container">
+                  <h5 class="uppercase">Advertise</h5>
+                  <p>
+                      Want to join the program? Go to <a href="#">this page</a> and sign up today! We'll get back to you!
+                  </p>
+                  <div class="ads">
+                      <img src="images/ads/tf_125x125_v1.gif" alt="img">
+                      <img src="images/ads/tf_125x125_v1.gif" alt="img">
+                      <img src="images/ads/tf_125x125_v1.gif" alt="img">
+                      <img src="images/ads/tf_125x125_v1.gif" alt="img">
+                  </div>
+              </div>
+              <div class="decoration">
+              </div>
+              <div class="container no-bottom">
+                  <h5 class="uppercase">Categories</h5>
+                  <div class="column no-bottom">
+                      <div class="one-half">
+                          <ul class="icon-lists">
+                              <li class="list-right">Tutorials</li>
+                              <li class="list-right">Premiums</li>
+                              <li class="list-right">Sales</li>
+                              <li class="list-right">Freebies</li>
+                          </ul>
+                      </div>
+                      <div class="one-half">
+                          <ul class="icon-lists">
+                              <li class="list-right">jQuery</li>
+                              <li class="list-right">Mobiles</li>
+                              <li class="list-right">Tablets</li>
+                              <li class="list-right">HTML / CSS</li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+              <div class="decoration">
+              </div>
+              <div class="container no-bottom">
+                  <div class="recent-post">
+                      <p>
+                          <img src="images/gallery/thumb/1t.jpg" alt="img">
+                          <strong>Blog Post Title</strong><br/>
+                          Lorem Ipsum is simply dummy text lorem Ipsum is text. <br/>
+                          <a href="#">Read More</a>
+                      </p>
+                  </div>
+                  <div class="recent-post">
+                      <p>
+                          <img src="images/gallery/thumb/2t.jpg" alt="img">
+                          <strong>Blog Post Title</strong><br/>
+                          Lorem Ipsum is simply dummy text lorem Ipsum is text. <br/>
+                          <a href="#">Read More</a>
+                      </p>
+                  </div>
+              </div>
+          </div>
+      </div>
+-->
             <div class="decoration"></div>
             <p class="center-text copyright">Copyright 2013. Tellaw.org All rights reserved!</p>
 
         </div>
     </div>
+
+
 
 
 

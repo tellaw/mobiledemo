@@ -1,6 +1,6 @@
 var appDetailComponent = {
 
-    populateArticle: function( $url ) {
+    populateArticle: function( $id , $url ) {
 
         console.log ( "loading json for article : "+$url );
 
@@ -13,7 +13,7 @@ var appDetailComponent = {
             dataType   : 'json',
             success    : function(response) {
                 tellaw_core.log(response);
-                appDetailComponent.writeArticleHTMLPost(response, $webSqlPostStore);
+                appDetailComponent.writeArticleHTMLPost($id, response, $webSqlPostStore);
             },
             error      : function() {
                 tellaw_core.error("error");
@@ -22,18 +22,21 @@ var appDetailComponent = {
 
     },
 
-    writeArticlesHTMLPost: function ( jsonresponse, $webSqlPostStore ) {
+    writeArticleHTMLPost: function ($id, jsonresponse, $webSqlPostStore ) {
 
         // Update DB
-        //appDetailComponent.updateLocalDbForList( jsonresponse , $webSqlPostStore);
+    	$webSqlPostStore.ifArticleNotUpToDateInDbWriteIt( $id, jsonresponse.post, 1 );
 
         // Refesh homepage
         //$webSqlPostStore.findHomePosts();
 
+    	// Tell Synchro tool to update next
+    	$synchroManager.$_processing = false;
+    	
     },
 
     updateArticles : function () {
-
+    	$webSqlPostStore.updateNotUpToDateArticles();
     },
 
     updateArticle : function () {

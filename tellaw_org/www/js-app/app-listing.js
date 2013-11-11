@@ -27,7 +27,7 @@ var appListingComponent = {
         appListingComponent.updateLocalDbForList( jsonresponse , $webSqlPostStore);
 
         // Refesh homepage
-        $webSqlPostStore.findHomePosts();
+        //$webSqlPostStore.findHomePosts();
 
     },
 
@@ -37,7 +37,7 @@ var appListingComponent = {
     updateLocalDbForList : function ( jsonresponse , $webSqlPostStore ) {
 
         jQuery.each(jsonresponse.posts, function() {
-            $webSqlPostStore.ifArticleNotUpToDateInDbWriteIt( this.id, this );
+            $webSqlPostStore.ifArticleNotUpToDateInDbWriteIt( this.id, this, 0 );
         });
 
     }

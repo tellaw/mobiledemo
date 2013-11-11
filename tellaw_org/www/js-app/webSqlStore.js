@@ -25,7 +25,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
         console.log ("Creating table for POSTS");
 
-        tx.executeSql('DROP TABLE IF EXISTS posts');
+        //tx.executeSql('DROP TABLE IF EXISTS posts');
 
         var sql = "CREATE TABLE IF NOT EXISTS posts ( " +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -35,7 +35,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
             //"data Text," +
             "updated DateTime," +
             "created DateTime," +
-            "needUpdate boolean" +
+            "listingmode VARCHAR(2)" +
             " );";
 
         tx.executeSql(sql, null,
@@ -67,9 +67,8 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
                     //this.updateHomeModel (results.rows.length > 0 ? results.rows.item(0) : null);
                     angular.forEach ( results.rows , function ( value, key ) {
 
-                        console.log ("article readen from DB");
-
                         $postHeaders = results.rows.item(key);
+                        console.log ("article readen from DB : "+ $postHeaders.externalId+" : mode : "+$postHeaders.listingmode);
                         $postJson = $localStorageStore.getArticle( $postHeaders.externalId );
 
                         if ( $postJson != "" ) {
@@ -99,19 +98,26 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
     };
 
-    this.ifArticleNotUpToDateInDbWriteIt = function ( $articleId, $json ) {
+    /**
+     * $detailMode = 0 for listing page content | 1 for detail page content
+     */
+    this.ifArticleNotUpToDateInDbWriteIt = function ( $articleId, $json, $detailMode ) {
 
-        var $sql = "SELECT * FROM POSTS WHERE externalId="+$articleId;
+    	if ( !$detailMode ) {
+    		var $sql = "SELECT * FROM POSTS WHERE externalId="+$articleId;
+    	} else {
+    		var $sql = "SELECT * FROM POSTS WHERE externalId="+$articleId+" AND listingmode='1'";
+    	}
         tellaw_core.log ($sql);
 
         this.db.transaction( function (tx) {
             return tx.executeSql ( $sql, [], function (tx, results) {
 
                 if (results.rows.length) {
-                    console.log ("article "+$articleId+" is in DB");
+                    console.log ("article "+$articleId+" is in DB and maybe up to date");
                 } else {
-                    console.log ("article "+$articleId+" is NOT in DB");
-                    $webSqlPostStore.writeArticle( $articleId, $json );
+                    console.log ("article "+$articleId+" is NOT in DB or maybe NOT update to date");
+                    $webSqlPostStore.writeArticle( $articleId, $json, $detailMode );
                 }
 
             } );
@@ -119,13 +125,22 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
     };
 
-    this.writeArticle = function ( $articleid, $jsonArticle ) {
-        var $sql = 'INSERT INTO POSTS (externalId, title, url, created, needUpdate) VALUES ('+$articleid+', ?, ?, ?, ?)';
-        tellaw_core.log ($sql);
+    this.writeArticle = function ( $articleid, $jsonArticle, $detailMode ) {
+        
+    	if ( !$detailMode ) {
+    		var $sql = 'INSERT INTO POSTS (externalId, title, url, created, listingmode) VALUES ("'+$articleid+'", ?, ?, ?, ?)';
+    	} else {
+    		var $sql = 'UPDATE POSTS SET title=?, url=?, created=?, listingmode=? WHERE externalId="'+$articleid+'"';
+    	}
+        
+    	tellaw_core.log ($sql);
         $d = new Date();
+        
+        tellaw_core.log ("writing article : "+$articleid+ " listingmode : "+$detailMode);
+        
         this.db.transaction( function (tx) {
             return tx.executeSql(
-                $sql, [$jsonArticle.title, $jsonArticle.url ,$jsonArticle.excerpt, $jsonArticle.thumbnail, $d.getTime(), true ],
+                $sql, [ $jsonArticle.title, $jsonArticle.url , $d.getTime(), $detailMode ],
                 null,
                 function(tx, error) {
                     console.log('Error inserting : ');
@@ -135,27 +150,64 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
         } );
         tellaw_core.log ("Adding to local storage.");
         $localStorageStore.setArticle($articleid, JSON.stringify($jsonArticle));
+        
+        if ( !$detailMode ) {
+        	$webSqlPostStore.findHomePosts();
+        }
+        
     };
 
     this.updateNotUpToDateArticles = function () {
 
-        var $sql = "SELECT * FROM POSTS WHERE needUpdate=true";
+        var $sql = "SELECT * FROM POSTS WHERE listingmode='0.0'";
         tellaw_core.log ($sql);
-        tx.executeSql(sql, [], function(tx, results) {
-
-            angular.forEach ( results.rows , function ( value, key ) {
-
-                $postHeaders = results.rows.item(key);
-                appDetailComponent.populateArticle( $postHeaders.url );
-
-            } );
-
-
+        
+        this.db.transaction( function (tx) {
+	        tx.executeSql($sql, [], function(tx, results) {
+	
+	        	tellaw_core.log ("Articles needing update : "+ results.rows.length);
+	        	
+	            angular.forEach ( results.rows , function ( value, key ) {
+	
+	                $postHeaders = results.rows.item(key);
+	                //appDetailComponent.populateArticle( $postHeaders.url );
+	                tellaw_core.log ("Updating article......... " + $postHeaders.externalId);
+	                $item = new QueueItem( $postHeaders.externalId, $postHeaders.url );
+	                $synchroManager.addToQueue($item);
+	            } );
+	
+	
+	        });
         });
-
 
     }
 
+    this.getArticle = function ( $articleId, $scope ) {
+
+        var $sql = "SELECT * FROM POSTS WHERE externalId="+$articleId;
+        tellaw_core.log ($sql);
+        this.db.transaction( function (tx) {
+            return tx.executeSql ( $sql, [],
+
+                function getArticleInDbQuerySuccess(tx, results) {
+                    //var scope = getAngularScope();
+                    $scope.$apply(function(){
+                    	
+                    	$postHeaders = results.rows.item(0);
+                    	$json = JSON.parse( $localStorageStore.getArticle( $postHeaders.externalId ) );
+                    	
+                    	console.log ( $postHeaders );
+                    	console.log ( $json );
+                    	
+                        $scope.post.content = $json;
+                    })
+                }
+
+            );
+        });
+
+    };
+    
     this.initializeDatabase(successCallback, errorCallback);
 
 }
