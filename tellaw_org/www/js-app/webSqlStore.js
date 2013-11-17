@@ -24,14 +24,17 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
     this.createTable = function(tx) {
 
         console.log ("Creating table for POSTS");
-
-        //tx.executeSql('DROP TABLE IF EXISTS posts');
-
+/*
+        tx.executeSql('DROP TABLE IF EXISTS posts');
+        tx.executeSql('DROP TABLE IF EXISTS posts_categories');
+        tx.executeSql('DROP TABLE IF EXISTS categories');
+*/
         var sql = "CREATE TABLE IF NOT EXISTS posts ( " +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "externalId VARCHAR(50), " +
             "title VARCHAR(50), " +
             "url VARCHAR(255), " +
+            "categories VARCHAR(255), " +
             //"data Text," +
             "updated DateTime," +
             "created DateTime," +
@@ -45,34 +48,6 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
             function(tx, error) {
                 alert('Create table error: ' + error.message);
             });
-
-        var sql = "CREATE TABLE IF NOT EXISTS categories ( " +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "title VARCHAR(50) " +
-            " );";
-
-        tx.executeSql(sql, null,
-            function() {
-                console.log('Create table CATEGORIES success');
-            },
-            function(tx, error) {
-                alert('Create table error: ' + error.message);
-            });
-
-        var sql = "CREATE TABLE IF NOT EXISTS posts_categories ( " +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "postId INTEGER, " +
-            "categoryId INTEGER " +
-            " );";
-
-        tx.executeSql(sql, null,
-            function() {
-                console.log('Create table POST_CATEGORIES success');
-            },
-            function(tx, error) {
-                alert('Create table error: ' + error.message);
-            });
-
 
     };
 
@@ -157,19 +132,25 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
     this.writeArticle = function ( $articleid, $jsonArticle, $detailMode ) {
         
     	if ( !$detailMode ) {
-    		var $sql = 'INSERT INTO POSTS (externalId, title, url, created, listingmode) VALUES ("'+$articleid+'", ?, ?, ?, ?)';
+    		var $sql = 'INSERT INTO POSTS (externalId, title, url, categories, created, listingmode) VALUES ("'+$articleid+'", ?, ?, ?, ?, ?)';
     	} else {
-    		var $sql = 'UPDATE POSTS SET title=?, url=?, created=?, listingmode=? WHERE externalId="'+$articleid+'"';
+    		var $sql = 'UPDATE POSTS SET title=?, url=?, categories=?, created=?, listingmode=? WHERE externalId="'+$articleid+'"';
     	}
         
     	tellaw_core.log ($sql);
         $d = new Date();
-        
+
+        $categories = "";
+        angular.forEach ( $jsonArticle.categories , function ( value, key ) {
+            console.log ("Adding category");
+            $categories += value.slug+"|";
+        } );
+
         tellaw_core.log ("writing article : "+$articleid+ " listingmode : "+$detailMode);
         
         this.db.transaction( function (tx) {
             return tx.executeSql(
-                $sql, [ $jsonArticle.title, $jsonArticle.url , $d.getTime(), $detailMode ],
+                $sql, [ $jsonArticle.title, $jsonArticle.url , $categories, $d.getTime(), $detailMode ],
                 null,
                 function(tx, error) {
                     console.log('Error inserting : ');
