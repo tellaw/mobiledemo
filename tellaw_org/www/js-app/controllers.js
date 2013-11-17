@@ -1,3 +1,4 @@
+console.log ("Controllers file loaded");
 angular.module('app', ['ngSanitize']);
 
 // Modules declarations

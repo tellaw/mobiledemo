@@ -1,31 +1,49 @@
-<div id="postSlots" ng-controller="homeController">
-    <div id="templater" style="display:block" ng-repeat="post in content.posts" >
-        <div id="postTemplate" class="click" onClick="window.location.href='#/view/{{post.id}}'">
-            <div class="container">
-                <div class="blog-post">
-                    <!--<div class="post-image">
-                        <img class="blog-post-image" src="images/blog/1.jpg" alt="img">
-                    </div>-->
-                    <img class="blog-post-image" src="{{post.thumbnail_images.full.url}}" alt="img">
-                    <div class="post-content">
-                        <h5 class="uppercase" ng-bind-html-unsafe="post.title"></h5>
-                        <div ng-bind-html-unsafe="post.excerpt">
 
-                        </div>
-                    </div>
+<div id="postSlots" ng-controller="homeController" >
 
-                    <div class="post-details">
-                        <!--<a class="posted-by" href="#">admin</a>
-                        <a class="posted-at" href="#">2 days ago</a>
-                        <a class="posted-cat" href="#">HTML5 / CSS3</a>
-                        <a class="posted-tag" href="#">framework, devs</a>-->
-                        <a class="posted-more" href="#/view/{{post.id}}">Lire l'article</a>
-                        <div class="clear">
-                        </div>
+    <!--
+    <article class="block prose row">
+
+        <ul data-orbit id="slider">
+            <li>
+                <img style="position:relative;" src="img/temp_2.jpg" alt="Slider 1">
+                <div style="position:absolute; top:10px; left:15px; background:#000; opacity:0.6; margin-bottom:10px;min-height:50%;padding:10px;">
+                    <h1 style="color:#FFF; font-size:2.5em; margin:0; padding:5px 0 0 10px;">Test</h1>
+                    <p style="color:#DDD; font-size:1.2em; margin:0; padding:5px 0 0 10px;">Bla bla bla bla</p>
+                </div>
+            </li>
+            <li class="active">
+                <img src="img/temp_2.jpg" alt="Slider 1">
+            </li>
+            <li>
+                <img src="img/temp_3.jpg" alt="Slider 1">
+            </li>
+        </ul>
+
+    </article>
+    -->
+
+    <section class="block prose blog-list" >
+
+        <article class="row" ng-repeat="post in content.posts">
+            <div class="small-3 columns">
+                <h2 ng-bind-html-unsafe="post.title"></h2>
+                <!--<div class="date">25.06.2013</div>-->
+            </div>
+            <div class="row">
+                <div class="prev-img large-1 columns">
+                    <a href="article.html">
+                        <img src="{{post.thumbnail_images.full.url}}" alt="IMG">
+                    </a>
+                </div>
+                <div class="large-2 columns">
+                    <p  ng-bind-html-unsafe="post.excerpt"></p>
+                    <div class="read-more">
+                        <a href="#/view/{{post.id}}" class="button small right">Lire l'article</a>
                     </div>
                 </div>
             </div>
-            <div class="decoration"></div>
-        </div>
-    </div>
+        </article>
+
+    </section>
 </div>

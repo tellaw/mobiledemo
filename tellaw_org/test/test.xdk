@@ -1,0 +1,38 @@
+{
+  "project": {
+    "projectSettingsVersion": "1.0",
+    "creationData": {
+      "type": "App Designer",
+      "src": "appDesigner",
+      "projectGuid": "fe1c9d9f-9608-48e4-84fc-fe252347c338",
+      "lastModifiedDate": 1384715429612,
+      "creationDate": 1384715429595
+    },
+    "projectFiles": {},
+    "projectDirectories": {},
+    "libraries": [
+      {
+        "name": "Cordova",
+        "version": "2.9.0",
+        "data": {
+          "default": true
+        }
+      },
+      {
+        "name": "intelXDK",
+        "version": "4.0.0",
+        "data": {
+          "default": true
+        }
+      }
+    ],
+    "services": []
+  },
+  "emulator": {
+    "mediaCache": [],
+    "OTAU": {
+      "message": null
+    }
+  },
+  "SettingsVersion": "1.0"
+}

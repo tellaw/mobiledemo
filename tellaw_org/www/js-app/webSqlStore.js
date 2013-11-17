@@ -40,11 +40,40 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
         tx.executeSql(sql, null,
             function() {
-                console.log('Create table success');
+                console.log('Create table POST success');
             },
             function(tx, error) {
                 alert('Create table error: ' + error.message);
             });
+
+        var sql = "CREATE TABLE IF NOT EXISTS categories ( " +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "title VARCHAR(50) " +
+            " );";
+
+        tx.executeSql(sql, null,
+            function() {
+                console.log('Create table CATEGORIES success');
+            },
+            function(tx, error) {
+                alert('Create table error: ' + error.message);
+            });
+
+        var sql = "CREATE TABLE IF NOT EXISTS posts_categories ( " +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "postId INTEGER, " +
+            "categoryId INTEGER " +
+            " );";
+
+        tx.executeSql(sql, null,
+            function() {
+                console.log('Create table POST_CATEGORIES success');
+            },
+            function(tx, error) {
+                alert('Create table error: ' + error.message);
+            });
+
+
     };
 
     this.addSampleData = function(tx) {
