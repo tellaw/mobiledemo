@@ -1,0 +1,38 @@
+{
+  "project": {
+    "projectSettingsVersion": "1.0",
+    "creationData": {
+      "type": "Import",
+      "src": "/Users/tellaw/www/mobiledemo/tellaw_org/www",
+      "projectGuid": "fa2ce434-c40e-4399-bdde-3585d43d2ac6",
+      "lastModifiedDate": 1384715320245,
+      "creationDate": 1384715320224
+    },
+    "projectFiles": {},
+    "projectDirectories": {},
+    "libraries": [
+      {
+        "name": "Cordova",
+        "version": "2.9.0",
+        "data": {
+          "default": true
+        }
+      },
+      {
+        "name": "intelXDK",
+        "version": "4.0.0",
+        "data": {
+          "default": true
+        }
+      }
+    ],
+    "services": []
+  },
+  "emulator": {
+    "mediaCache": [],
+    "OTAU": {
+      "message": null
+    }
+  },
+  "SettingsVersion": "1.0"
+}
