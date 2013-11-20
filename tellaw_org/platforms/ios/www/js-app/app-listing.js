@@ -23,8 +23,9 @@ var appListingComponent = {
 
     download: function() {
 
+        var fileTransfer = new FileTransfer();
         var localFileName = "index.json";
-
+/*
         var fileTransfer = new FileTransfer();
         var uri = encodeURI("http://www.tellaw.org?json=1");
 
@@ -45,7 +46,7 @@ var appListingComponent = {
                     "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
                 }
             }
-        );
+        );*/
     },
 
     writeArticlesHTMLPost: function ( jsonresponse, $webSqlPostStore ) {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5AE8FEAD-17B4-481B-93B0-CC4854174217</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Tellaw_org</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>AB7641BF-0516-4022-A8FB-D10CC229349A</key>
+		<string>https://github.com/tellaw/mobiledemo.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>tellaw_org/platforms/ios/Tellaw_org.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>AB7641BF-0516-4022-A8FB-D10CC229349A</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/tellaw/mobiledemo.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AB7641BF-0516-4022-A8FB-D10CC229349A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AB7641BF-0516-4022-A8FB-D10CC229349A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>mobiledemo</string>
+		</dict>
+	</array>
+</dict>
+</plist>

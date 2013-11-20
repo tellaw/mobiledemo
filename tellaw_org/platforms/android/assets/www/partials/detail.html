@@ -1,0 +1,22 @@
+<section class="block prose blog-post" id="postSlots" ng-controller="detailController">
+
+    <article>
+        <a href="javascript: history.back();" class="button right small">Retour à la home</a>
+        <div style="clear:both"></div>
+
+        <h2 ng-bind-html-unsafe="post.content.title"></h2>
+        <div class="date">25.06.2013</div>
+        <div class="prev-img">
+            <a href="article.html">
+                <img src="{{post.content.thumbnail_images.full.url}}" alt="IMG">
+            </a>
+        </div>
+        <p ng-bind-html-unsafe="post.content.excerpt"></p>
+        <p ng-bind-html-unsafe="post.content.content"></p>
+
+        <a href="javascript: history.back();" class="button right small">Retour</a>
+
+        <div class="clear"></div>
+    </article>
+
+</section>
