@@ -1,0 +1,22 @@
+2013-11-21 21:54:35.714 Tellaw_org[11581:80b] Multi-tasking -> Device: YES, App: YES
+2013-11-21 21:54:35.851 Tellaw_org[11581:80b] Unlimited access to network resources
+2013-11-21 21:54:37.524 Tellaw_org[11581:80b] Resetting plugins due to page load.
+2013-11-21 21:54:38.139 Tellaw_org[11581:80b] Finished load of: file:///Users/tellaw/Library/Application%20Support/iPhone%20Simulator/7.0.3/Applications/5132A08B-C2A5-4015-B43F-0DF481A90757/Tellaw_org.app/www/index.html
+2013-11-21 21:55:02.492 Tellaw_org[11948:80b] Multi-tasking -> Device: YES, App: YES
+2013-11-21 21:55:02.503 Tellaw_org[11948:80b] Unlimited access to network resources
+2013-11-21 21:55:02.696 Tellaw_org[11948:80b] Resetting plugins due to page load.
+2013-11-21 21:55:03.003 Tellaw_org[11948:80b] Finished load of: file:///Users/tellaw/Library/Application%20Support/iPhone%20Simulator/7.0.3/Applications/5132A08B-C2A5-4015-B43F-0DF481A90757/Tellaw_org.app/www/index.html
+2013-11-21 21:55:40.340 Tellaw_org[12327:80b] Multi-tasking -> Device: YES, App: YES
+2013-11-21 21:55:40.350 Tellaw_org[12327:80b] Unlimited access to network resources
+2013-11-21 21:55:40.602 Tellaw_org[12327:80b] Resetting plugins due to page load.
+2013-11-21 21:55:58.015 Tellaw_org[12327:3f03] void SendDelegateMessage(NSInvocation *): delegate (webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:) failed to return after waiting 10 seconds. main run loop mode: kCFRunLoopDefaultMode
+2013-11-21 21:55:58.058 Tellaw_org[12327:80b] Finished load of: file:///Users/tellaw/Library/Application%20Support/iPhone%20Simulator/7.0.3/Applications/5132A08B-C2A5-4015-B43F-0DF481A90757/Tellaw_org.app/www/index.html
+2013-11-21 21:56:48.072 Tellaw_org[12713:80b] Multi-tasking -> Device: YES, App: YES
+2013-11-21 21:56:48.082 Tellaw_org[12713:80b] Unlimited access to network resources
+2013-11-21 21:56:48.254 Tellaw_org[12713:80b] Resetting plugins due to page load.
+2013-11-21 21:56:59.303 Tellaw_org[12713:4103] void SendDelegateMessage(NSInvocation *): delegate (webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:) failed to return after waiting 10 seconds. main run loop mode: kCFRunLoopDefaultMode
+2013-11-21 21:56:59.393 Tellaw_org[12713:80b] Finished load of: file:///Users/tellaw/Library/Application%20Support/iPhone%20Simulator/7.0.3/Applications/5132A08B-C2A5-4015-B43F-0DF481A90757/Tellaw_org.app/www/index.html
+2013-11-21 22:56:31.256 Tellaw_org[13407:80b] Multi-tasking -> Device: YES, App: YES
+2013-11-21 22:56:31.263 Tellaw_org[13407:80b] Unlimited access to network resources
+2013-11-21 22:56:31.493 Tellaw_org[13407:80b] Resetting plugins due to page load.
+2013-11-21 22:56:39.687 Tellaw_org[13407:80b] Finished load of: file:///Users/tellaw/Library/Application%20Support/iPhone%20Simulator/7.0.3/Applications/5132A08B-C2A5-4015-B43F-0DF481A90757/Tellaw_org.app/www/index.html

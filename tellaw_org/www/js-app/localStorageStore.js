@@ -11,7 +11,7 @@ var LocalStorageStore = function(successCallback, errorCallback) {
         $articleStorageName = this.getArticleStorageName( $articleId );
 
         tellaw_core.log ("Setting article : "+ $articleStorageName );
-        tellaw_core.log ( $articleJson );
+        //tellaw_core.log ( $articleJson );
         window.localStorage.setItem( $articleStorageName , $articleJson );
 
     }

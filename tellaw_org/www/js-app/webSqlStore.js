@@ -77,15 +77,15 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
                         if ( $postJson != "" ) {
                             $postJson = JSON.parse( $postJson );
-                            console.log ($postJson);
+                            //console.log ($postJson);
                             $dataJson.posts[$postHeaders.id] = $postJson;
                         }
 
                     } );
 
-                    console.log ($dataJson);
+                    //console.log ($dataJson);
 
-                    var $scope = angular.element($("#postSlots")).scope();
+                    var $scope = getAngularScope();
                     //console.log (angular.element($("#postSlots")).scope());
                     $scope.$apply(function(){
                         $scope.content = $dataJson;
