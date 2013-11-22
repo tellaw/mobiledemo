@@ -2,6 +2,8 @@ var $isCordovaReady = false;
 var $isAngularReady = false;
 var $isJqueryReady = false;
 
+var $fileTransfer = null;
+
 function getAngularScope () {
     return angular.element($("#postSlots")).scope();
 }
@@ -40,6 +42,10 @@ function isApplicationReady() {
 
     if ( $isAngularReady && $isCordovaReady && $isJqueryReady ) {
         console.log ("Application starting, ready events detected");
+
+        console.log ("Starting first FileTransfer");
+        $fileTransfer = new FileTransfer();
+
         initAngularApplication();
         window.clearInterval($checkInitReady);
     } else {
