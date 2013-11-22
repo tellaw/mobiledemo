@@ -21,6 +21,23 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
         )
     };
 
+    this.reset = function (tx) {
+        this.db.transaction(
+            function(tx) {
+                tx.executeSql('DROP TABLE IF EXISTS posts');
+                tx.executeSql('DROP TABLE IF EXISTS posts_categories');
+                tx.executeSql('DROP TABLE IF EXISTS categories');
+            },
+            function(error) {
+                console.log('Transaction error: ' + error);
+            },
+            function() {
+                $webSqlPostStore.initializeDatabase();
+                console.log('Transaction success');
+            }
+        )
+    };
+
     this.createTable = function(tx) {
 
         console.log ("Creating table for POSTS");
@@ -68,10 +85,11 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
                     console.log ("homePostsLoaded");
 
                     var $dataJson = { "posts" : {} };
+                    var $loop=0;
                     //this.updateHomeModel (results.rows.length > 0 ? results.rows.item(0) : null);
                     angular.forEach ( results.rows , function ( value, key ) {
 
-                        $postHeaders = results.rows.item(key);
+                        $postHeaders = results.rows.item($loop++);
                         console.log ("article readen from DB : "+ $postHeaders.externalId+" : mode : "+$postHeaders.listingmode);
                         $postJson = $localStorageStore.getArticle( $postHeaders.externalId );
 
@@ -176,10 +194,13 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 	        tx.executeSql($sql, [], function(tx, results) {
 	
 	        	tellaw_core.log ("Articles needing update : "+ results.rows.length);
-	        	
+
+                var $loop=0;
 	            angular.forEach ( results.rows , function ( value, key ) {
-	
-	                $postHeaders = results.rows.item(key);
+
+                    console.log ("Article for update : "+key);
+
+	                $postHeaders = results.rows.item($loop++);
 	                //appDetailComponent.populateArticle( $postHeaders.url );
 	                tellaw_core.log ("Updating article......... " + $postHeaders.externalId);
 	                $item = new QueueItem( $postHeaders.externalId, $postHeaders.url );

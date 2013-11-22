@@ -35,6 +35,10 @@ function initAngularApplication () {
                     controller: 'detailController',
                     templateUrl: 'partials/detail.html'
                 }).
+                when(   '/configuration/', {
+                    controller: 'configurationController',
+                    templateUrl: 'partials/configuration.html'
+                }).
                 otherwise({redirectTo: '/phones'});
         }]);
 
@@ -45,9 +49,8 @@ function initAngularApplication () {
 
         initAngularEvents( "home" );
 
-        appListingComponent.download();
         appListingComponent.populateArticles( $webSqlPostStore );
-        appDetailComponent.updateArticles();
+        //appDetailComponent.updateArticles();
 
         $scope.name = "home";
         $scope.post = {
@@ -77,6 +80,15 @@ function initAngularApplication () {
         $webSqlPostStore.getArticle( $routeParams.id, $scope );
 
         console.log ("<< ==== End of DetailController ==== >>");
+
+    }]);
+
+    newsApp.controller ('configurationController', ['$scope', '$routeParams', function($scope, $routeParams) {
+
+
+        console.log ("<< ==== Start of ConfigurationController ==== >>");
+
+        console.log ("<< ==== End of ConfigurationController ==== >>");
 
     }]);
 

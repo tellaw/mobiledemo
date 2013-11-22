@@ -1,0 +1,24 @@
+
+<div class="row">
+    <center>
+    <div class="desc">
+        <i class="icon-question-sign"></i>
+        Reset de la base de donnée de l'application.
+    </div>
+
+    <input type="submit" class="button" value="Reset du stockage" onClick="$webSqlPostStore.reset();alert ('Reset fait');">
+
+    </center>
+</div>
+
+<div class="row">
+    <center>
+        <div class="desc">
+            <i class="icon-question-sign"></i>
+            Recherchement des articles
+        </div>
+
+        <input type="submit" class="button" value="Rechargement des articles" onClick="appListingComponent.populateArticles($webSqlPostStore);alert ('Recherchement débuté');">
+
+    </center>
+</div>

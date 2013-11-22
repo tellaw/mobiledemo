@@ -4,6 +4,8 @@ var $isJqueryReady = false;
 
 var $fileTransfer = null;
 
+var $isRippleMode = true;
+
 function getAngularScope () {
     return angular.element($("#postSlots")).scope();
 }
@@ -38,13 +40,13 @@ $checkInitReady = setInterval(
 
 function isApplicationReady() {
 
-    console.log("Application starting : Checking for component's to be ready");
-
     if ( $isAngularReady && $isCordovaReady && $isJqueryReady ) {
         console.log ("Application starting, ready events detected");
 
-        console.log ("Starting first FileTransfer");
-        $fileTransfer = new FileTransfer();
+        if (!$isRippleMode) {
+            console.log ("Starting first FileTransfer");
+            $fileTransfer = new FileTransfer();
+        }
 
         initAngularApplication();
         window.clearInterval($checkInitReady);
