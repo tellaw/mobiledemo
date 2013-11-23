@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="row" id="postSlots" ng-controller="configurationController">
     <center>
     <div class="desc">
         <i class="icon-question-sign"></i>
@@ -17,8 +17,6 @@
             <i class="icon-question-sign"></i>
             Recherchement des articles
         </div>
-
         <input type="submit" class="button" value="Rechargement des articles" onClick="appListingComponent.populateArticles($webSqlPostStore);alert ('Recherchement débuté');">
-
     </center>
 </div>

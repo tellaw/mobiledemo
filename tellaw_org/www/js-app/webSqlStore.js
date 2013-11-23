@@ -85,11 +85,11 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
                     console.log ("homePostsLoaded");
 
                     var $dataJson = { "posts" : {} };
-                    var $loop=0;
-                    //this.updateHomeModel (results.rows.length > 0 ? results.rows.item(0) : null);
-                    angular.forEach ( results.rows , function ( value, key ) {
+                    console.log ("Number of results : "+ results.rows.length)
 
-                        $postHeaders = results.rows.item($loop++);
+                    for (var i=0;i<results.rows.length;i++) {
+
+                        $postHeaders = results.rows.item(i);
                         console.log ("article readen from DB : "+ $postHeaders.externalId+" : mode : "+$postHeaders.listingmode);
                         $postJson = $localStorageStore.getArticle( $postHeaders.externalId );
 
@@ -99,7 +99,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
                             $dataJson.posts[$postHeaders.id] = $postJson;
                         }
 
-                    } );
+                    }
 
                     //console.log ($dataJson);
 
