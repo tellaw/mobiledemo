@@ -11,11 +11,11 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
                 self.addSampleData(tx);
             },
             function(error) {
-                console.log('Transaction error: ' + error);
+                console.log('[WebSqlPostStore:initialiseDatabase]:Transaction error: ' + error);
                 if (errorCallback) errorCallback();
             },
             function() {
-                console.log('Transaction success');
+                console.log('[WebSqlPostStore:initialiseDatabase]:Transaction success');
                 if (successCallback) successCallback();
             }
         )
@@ -29,11 +29,11 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
                 tx.executeSql('DROP TABLE IF EXISTS categories');
             },
             function(error) {
-                console.log('Transaction error: ' + error);
+                console.log('[WebSqlPostStore:reset]:Transaction error: ' + error);
             },
             function() {
                 $webSqlPostStore.initializeDatabase();
-                console.log('Transaction success');
+                console.log('[WebSqlPostStore:reset]:Transaction success');
             }
         )
     };
@@ -60,10 +60,10 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
         tx.executeSql(sql, null,
             function() {
-                console.log('Create table POST success');
+                console.log('[WebSqlPostStore:createTable]:Create table POST success');
             },
             function(tx, error) {
-                alert('Create table error: ' + error.message);
+                alert('[WebSqlPostStore:createTable]:Create table error: ' + error.message);
             });
 
     };
@@ -77,31 +77,27 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
             function(tx) {
 
-                console.log ("homePostsStarted");
+                console.log ("[WebSqlPostStore:findHomePosts]:homePostsStarted");
                 var sql =   "SELECT * FROM posts ORDER BY id DESC";
 
                 tx.executeSql(sql, [], function(tx, results) {
 
-                    console.log ("homePostsLoaded");
-
                     var $dataJson = { "posts" : {} };
-                    console.log ("Number of results : "+ results.rows.length)
+                    console.log ("[WebSqlPostStore:findHomePosts]:Number of results : "+ results.rows.length)
 
                     for (var i=0;i<results.rows.length;i++) {
 
                         $postHeaders = results.rows.item(i);
-                        console.log ("article readen from DB : "+ $postHeaders.externalId+" : mode : "+$postHeaders.listingmode);
+                        console.log ("[WebSqlPostStore:finHomePosts]:article readen from DB : "+ $postHeaders.externalId+" : mode : "+$postHeaders.listingmode);
                         $postJson = $localStorageStore.getArticle( $postHeaders.externalId );
 
                         if ( $postJson != "" ) {
                             $postJson = JSON.parse( $postJson );
-                            console.log ($postJson);
+                            //console.log ($postJson);
                             $dataJson.posts[$postHeaders.id] = $postJson;
                         }
 
                     }
-
-                    //console.log ($dataJson);
 
                     var $scope = getAngularScope();
                     //console.log (angular.element($("#postSlots")).scope());
@@ -113,7 +109,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
             },
             function(error) {
-                alert("Transaction Error: " + error.message);
+                alert("[WebSqlPostStore:findHomePosts]:Transaction Error: " + error.message);
             }
         );
 
@@ -130,15 +126,15 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
     	} else {
     		var $sql = "SELECT * FROM POSTS WHERE externalId="+$articleId+" AND listingmode='1'";
     	}
-        tellaw_core.log ($sql);
+        tellaw_core.log ("[WebSqlPostStore:ifArticleNotUpToDateInDbWriteIt]:"+$sql);
 
         this.db.transaction( function (tx) {
             return tx.executeSql ( $sql, [], function (tx, results) {
 
                 if (results.rows.length) {
-                    console.log ("article "+$articleId+" is in DB and maybe up to date");
+                    console.log ("[WebSqlPostStore:ifArticleNotUpToDateInDbWriteIt]:article "+$articleId+" is in DB and maybe up to date");
                 } else {
-                    console.log ("article "+$articleId+" is NOT in DB or maybe NOT update to date");
+                    console.log ("[WebSqlPostStore:ifArticleNotUpToDateInDbWriteIt]:article "+$articleId+" is NOT in DB or maybe NOT update to date");
                     $webSqlPostStore.writeArticle( $articleId, $json, $detailMode );
                 }
 
@@ -150,9 +146,9 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
     this.writeArticle = function ( $articleid, $jsonArticle, $detailMode ) {
         
     	if ( !$detailMode ) {
-    		var $sql = 'INSERT INTO POSTS (externalId, title, url, categories, created, listingmode) VALUES ("'+$articleid+'", ?, ?, ?, ?, ?)';
+    		var $sql = 'INSERT INTO POSTS (externalId, title, url, categories, created, listingmode) VALUES ("'+$articleid+'", ?, ?, ?, ?, "'+$detailMode+'")';
     	} else {
-    		var $sql = 'UPDATE POSTS SET title=?, url=?, categories=?, created=?, listingmode=? WHERE externalId="'+$articleid+'"';
+    		var $sql = 'UPDATE POSTS SET title=?, url=?, categories=?, created=?, listingmode="'+$detailMode+'" WHERE externalId="'+$articleid+'"';
     	}
         
     	tellaw_core.log ($sql);
@@ -160,23 +156,23 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
         $categories = "";
         angular.forEach ( $jsonArticle.categories , function ( value, key ) {
-            console.log ("Adding category");
+            console.log ("[WebSqlPostStore:writeArticle]:Adding category");
             $categories += value.slug+"|";
         } );
 
-        tellaw_core.log ("writing article : "+$articleid+ " listingmode : "+$detailMode);
+        tellaw_core.log ("[WebSqlPostStore:writeArticle]:writing article : "+$articleid+ " listingmode : "+$detailMode);
         
         this.db.transaction( function (tx) {
             return tx.executeSql(
-                $sql, [ $jsonArticle.title, $jsonArticle.url , $categories, $d.getTime(), $detailMode ],
+                $sql, [ $jsonArticle.title, $jsonArticle.url , $categories, $d.getTime() ],
                 null,
                 function(tx, error) {
-                    console.log('Error inserting : ');
+                    console.log('[WebSqlPostStore:writeArticle]:Error inserting : ');
                     console.log (error);
                 }
             );
         } );
-        tellaw_core.log ("Adding to local storage.");
+        tellaw_core.log ("[WebSqlPostStore:writeArticle]:Adding to local storage.");
         $localStorageStore.setArticle($articleid, JSON.stringify($jsonArticle));
         
         if ( !$detailMode ) {
@@ -187,22 +183,22 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
     this.updateNotUpToDateArticles = function () {
 
-        var $sql = "SELECT * FROM POSTS WHERE listingmode='0.0'";
-        tellaw_core.log ($sql);
+        var $sql = "SELECT * FROM POSTS WHERE listingmode='0'";
+        tellaw_core.log ("[WebSqlPostStore:updateNotUpToDateArticles]:"+$sql);
         
         this.db.transaction( function (tx) {
 	        tx.executeSql($sql, [], function(tx, results) {
 	
-	        	tellaw_core.log ("Articles needing update : "+ results.rows.length);
+	        	tellaw_core.log ("[WebSqlPostStore:updateNotUpToDateArticles]:Articles needing update : "+ results.rows.length);
 
                 var $loop=0;
 	            angular.forEach ( results.rows , function ( value, key ) {
 
-                    console.log ("Article for update : "+key);
+                    console.log ("[WebSqlPostStore:updateNotUpToDateArticles]:Article for update : "+key);
 
 	                $postHeaders = results.rows.item($loop++);
 	                //appDetailComponent.populateArticle( $postHeaders.url );
-	                tellaw_core.log ("Updating article......... " + $postHeaders.externalId);
+	                tellaw_core.log ("[WebSqlPostStore:updateNotUpToDateArticles]:Updating article......... " + $postHeaders.externalId);
 	                $item = new QueueItem( $postHeaders.externalId, $postHeaders.url );
 	                $synchroManager.addToQueue($item);
 	            } );
@@ -216,7 +212,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
     this.getArticle = function ( $articleId, $scope ) {
 
         var $sql = "SELECT * FROM POSTS WHERE externalId="+$articleId;
-        tellaw_core.log ($sql);
+        tellaw_core.log ("[WebSqlPostStore:getArticle]:"+$sql);
         this.db.transaction( function (tx) {
             return tx.executeSql ( $sql, [],
 
@@ -226,9 +222,11 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
                     	
                     	$postHeaders = results.rows.item(0);
                     	$json = JSON.parse( $localStorageStore.getArticle( $postHeaders.externalId ) );
-                    	
+
+                        console.log("[WebSqlPostStore:updateNotUpToDateArticles]:");
                     	console.log ( $postHeaders );
                     	console.log ( $json );
+
                     	
                         $scope.post.content = $json;
                     })

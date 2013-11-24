@@ -10,7 +10,7 @@ var LocalStorageStore = function(successCallback, errorCallback) {
 
         $articleStorageName = this.getArticleStorageName( $articleId );
 
-        tellaw_core.log ("Setting article : "+ $articleStorageName );
+        tellaw_core.log ("[LocalStorageStore:setArticle]:Setting article : "+ $articleStorageName );
         //tellaw_core.log ( $articleJson );
         window.localStorage.setItem( $articleStorageName , $articleJson );
 
@@ -18,7 +18,7 @@ var LocalStorageStore = function(successCallback, errorCallback) {
 
     this.getArticle = function ( $articleId ) {
         $articleStorageName = this.getArticleStorageName( $articleId );
-        tellaw_core.log ("Getting article : "+$articleStorageName);
+        tellaw_core.log ("[LocalStorageStore:getArticle]:Getting article : "+$articleStorageName);
         return window.localStorage.getItem( $articleStorageName );
     }
 

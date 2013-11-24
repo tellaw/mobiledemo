@@ -48,7 +48,7 @@ function initAngularApplication () {
         initAngularEvents( "home" );
 
         appListingComponent.populateArticles( $webSqlPostStore );
-        //appDetailComponent.updateArticles();
+        $webSqlPostStore.updateNotUpToDateArticles();
 
         $scope.name = "home";
         $scope.post = {
