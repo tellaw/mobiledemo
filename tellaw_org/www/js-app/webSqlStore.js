@@ -95,7 +95,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
                         if ( $postJson != "" ) {
                             $postJson = JSON.parse( $postJson );
-                            //console.log ($postJson);
+                            console.log ($postJson);
                             $dataJson.posts[$postHeaders.id] = $postJson;
                         }
 

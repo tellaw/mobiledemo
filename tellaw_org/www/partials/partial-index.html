@@ -1,11 +1,9 @@
-
 <div id="postSlots" ng-controller="homeController" >
-
     <section class="block prose blog-list" >
 
         <article class="row" ng-repeat="post in content.posts">
             <div class="small-3 columns">
-                <h2 ng-bind-html-unsafe="post.title"></h2>
+                <h2 ng-bind-html="post.title"></h2>
                 <!--<div class="date">25.06.2013</div>-->
             </div>
             <div class="row">
@@ -15,7 +13,7 @@
                     </a>
                 </div>
                 <div class="large-2 columns">
-                    <p  ng-bind-html-unsafe="post.excerpt"></p>
+                    <p  ng-bind-html="post.excerpt"></p>
                     <div class="read-more">
                         <a href="#/view/{{post.id}}" class="button small right">Lire l'article</a>
                     </div>

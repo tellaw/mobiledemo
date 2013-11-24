@@ -1,6 +1,5 @@
 console.log ("Controllers file loaded");
 
-
 angular.element(document).ready(function() {
     console.log ("Angular now ready");
 });
@@ -15,16 +14,15 @@ var $synchroManager = new SynchroManager();
 // Events Declarations
 function initAngularEvents ( $section ){
 
-
     //$scope.$on( "DETAIL_ARTICLE_NOT_LOADED_EVENT", $webSqlPostStore.loadDetailArticle );
 
 }
 
 function initAngularApplication () {
 
-    angular.module('app', ['ngRoute','ngSanitize']);
+    //angular.module('NewsAPP', ['ngRoute','ngSanitize']);
 
-    newsApp = angular.module('NewsAPP', ['ngRoute']).
+    newsApp = angular.module('NewsAPP', ['ngRoute','ngSanitize']).
         config(['$routeProvider', function($routeProvider) {
             $routeProvider.
                 when(   '/', {
@@ -39,7 +37,7 @@ function initAngularApplication () {
                     controller: 'configurationController',
                     templateUrl: 'partials/configuration.html'
                 }).
-                otherwise({redirectTo: '/phones'});
+                otherwise({redirectTo: '/'});
         }]);
 
     // Controller declarations
