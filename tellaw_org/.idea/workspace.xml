@@ -41,10 +41,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="77" selection-start="2038" selection-end="2038" vertical-scroll-proportion="0.34762457" vertical-offset="555" max-vertical-offset="1980">
+            <state line="57" column="77" selection-start="2038" selection-end="2038" vertical-scroll-proportion="-12.5" vertical-offset="555" max-vertical-offset="1980">
               <folding />
             </state>
           </provider>
@@ -77,10 +77,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app-listing.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="app-listing.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js-app/app-listing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="46" selection-start="674" selection-end="674" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="750">
+            <state line="8" column="63" selection-start="218" selection-end="218" vertical-scroll-proportion="0.13528748" vertical-offset="0" max-vertical-offset="887">
               <folding />
             </state>
           </provider>
@@ -131,11 +131,11 @@
         <option value="$PROJECT_DIR$/www/partials/configuration.html" />
         <option value="$PROJECT_DIR$/www/js-app/webSqlStore.js" />
         <option value="$PROJECT_DIR$/www/js-app/controllers.js" />
-        <option value="$PROJECT_DIR$/www/js-app/app-listing.js" />
         <option value="$PROJECT_DIR$/www/css/style.css" />
         <option value="$PROJECT_DIR$/www/partials/detail.html" />
         <option value="$PROJECT_DIR$/www/partials/partial-index.html" />
         <option value="$PROJECT_DIR$/www/index.html" />
+        <option value="$PROJECT_DIR$/www/js-app/app-listing.js" />
       </list>
     </option>
   </component>
@@ -466,13 +466,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js-app/app-listing.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="46" selection-start="674" selection-end="674" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="750">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="154" column="7" selection-start="3217" selection-end="3217" vertical-scroll-proportion="0.0" vertical-offset="1905" max-vertical-offset="10080">
@@ -496,7 +489,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="77" selection-start="2038" selection-end="2038" vertical-scroll-proportion="0.34762457" vertical-offset="555" max-vertical-offset="1980">
+        <state line="57" column="77" selection-start="2038" selection-end="2038" vertical-scroll-proportion="-12.5" vertical-offset="555" max-vertical-offset="1980">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js-app/app-listing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="63" selection-start="218" selection-end="218" vertical-scroll-proportion="0.13528748" vertical-offset="0" max-vertical-offset="887">
           <folding />
         </state>
       </provider>

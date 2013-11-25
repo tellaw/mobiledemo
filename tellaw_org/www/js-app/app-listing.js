@@ -6,7 +6,7 @@ var appListingComponent = {
         // Load ajax
         $.ajax({
             type       : "POST",
-            url        : 'http://www.tellaw.org?json=1',
+            url        : 'http://www.tellaw.org?json=1&count=50',
             //url        : 'default.json',
             crossDomain: true,
             dataType   : 'json',
