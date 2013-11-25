@@ -158,6 +158,50 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 
     };
 
+    this.findSearchPosts = function ( $keyword , $scope ) {
+        this.db.transaction(
+
+            function(tx) {
+
+                console.log ("[WebSqlPostStore:findCategoryPosts]:homePostsStarted");
+                var sql =   "SELECT * FROM posts WHERE categories LIKE '%"+$keyword+"%' ORDER BY id DESC";
+                console.log ("[WebSqlPostStore:findCategoryPosts]:SQL : "+sql);
+                tx.executeSql(sql, [], function(tx, results) {
+
+                    var $dataJson = { "posts" : {} };
+                    console.log ("[WebSqlPostStore:findCategoryPosts]:Number of results : "+ results.rows.length)
+
+                    for (var i=0;i<results.rows.length;i++) {
+
+                        $postHeaders = results.rows.item(i);
+                        console.log ("[WebSqlPostStore:findCategoryPosts]:article readen from DB : "+ $postHeaders.externalId+" : mode : "+$postHeaders.listingmode);
+                        $postJson = $localStorageStore.getArticle( $postHeaders.externalId );
+
+                        if ( $postJson != "" ) {
+                            $postJson = JSON.parse( $postJson );
+                            //console.log ($postJson);
+                            $dataJson.posts[$postHeaders.id] = $postJson;
+                        }
+
+                    }
+
+                    var $scope = getAngularScope();
+                    //console.log (angular.element($("#postSlots")).scope());
+                    $scope.$apply(function(){
+                        $scope.content = $dataJson;
+                    })
+
+                });
+
+            },
+            function(error) {
+                alert("[WebSqlPostStore:findHomePosts]:Transaction Error: " + error.message);
+            }
+        );
+
+    };
+
+
     /**
      * $detailMode = 0 for listing page content | 1 for detail page content
      */
@@ -243,8 +287,7 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 	                $synchroManager.addToQueue($item);
 
 	            }
-	
-	
+
 	        });
         });
 

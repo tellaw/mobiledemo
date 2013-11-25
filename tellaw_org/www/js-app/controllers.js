@@ -37,6 +37,10 @@ function initAngularApplication () {
                     controller: 'categoryController',
                     templateUrl: 'partials/partial-index.html'
                 }).
+                when(   '/search/:keyword', {
+                    controller: 'searchController',
+                    templateUrl: 'partials/partial-index.html'
+                }).
                 when(   '/configuration/', {
                     controller: 'configurationController',
                     templateUrl: 'partials/configuration.html'
@@ -70,7 +74,7 @@ function initAngularApplication () {
 
         console.log ("<< ==== Start of categoryController ==== >>");
 
-        initAngularEvents( "home" );
+        initAngularEvents( "category" );
 
         $scope.name = "category";
 
@@ -80,6 +84,27 @@ function initAngularApplication () {
 
         $scope.post = {
             content: appListingComponent.populateCategory( $routeParams.id )
+        };
+
+        $webSqlPostStore.updateNotUpToDateArticles();
+
+        console.log ("<< ==== End of categoryController ==== >>");
+
+    }]);
+
+    // Controller declarations
+    newsApp.controller ('searchController', ['$scope', '$routeParams', function($scope, $routeParams) {
+
+        console.log ("<< ==== Start of categoryController ==== >>");
+
+        initAngularEvents( "search" );
+
+        $scope.name = "search";
+
+        $("#titleofpage").html("Recherche : " + $routeParams.keyword);
+
+        $scope.post = {
+            content: appListingComponent.populateSearch( $routeParams.keyword )
         };
 
         $webSqlPostStore.updateNotUpToDateArticles();

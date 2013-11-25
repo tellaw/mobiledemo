@@ -27,6 +27,39 @@ var appListingComponent = {
 
     },
 
+    populateSearch: function ( $keyword ) {
+
+        // Load ajax
+        $.ajax({
+            type       : "POST",
+            url        : 'http://www.tellaw.org/?s='+$keyword+'&json=1&count=50',
+            //url        : 'default.json',
+            crossDomain: true,
+            dataType   : 'json',
+            success    : function(response) {
+
+                var $dataJson = { "posts" : {} };
+                jQuery.each(response.posts, function() {
+
+                    $webSqlPostStore.ifArticleNotUpToDateInDbWriteIt( this.id, this, 0 );
+                    $dataJson.posts[this.id] = this;
+
+                });
+
+                var $scope = getAngularScope();
+                //console.log (angular.element($("#postSlots")).scope());
+                $scope.$apply(function(){
+                    $scope.content = $dataJson;
+                })
+
+            },
+            error      : function() {
+                tellaw_core.error("error");
+            }
+        });
+
+    },
+
     /**
      * Functions used to manage local storage
      */
