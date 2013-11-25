@@ -113,6 +113,48 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
             }
         );
 
+    };
+
+    this.findCategoryPosts = function ( $category , $scope ) {
+        this.db.transaction(
+
+            function(tx) {
+
+                console.log ("[WebSqlPostStore:findCategoryPosts]:homePostsStarted");
+                var sql =   "SELECT * FROM posts WHERE categories LIKE '%"+$category+"%' ORDER BY id DESC";
+                console.log ("[WebSqlPostStore:findCategoryPosts]:SQL : "+sql);
+                tx.executeSql(sql, [], function(tx, results) {
+
+                    var $dataJson = { "posts" : {} };
+                    console.log ("[WebSqlPostStore:findCategoryPosts]:Number of results : "+ results.rows.length)
+
+                    for (var i=0;i<results.rows.length;i++) {
+
+                        $postHeaders = results.rows.item(i);
+                        console.log ("[WebSqlPostStore:findCategoryPosts]:article readen from DB : "+ $postHeaders.externalId+" : mode : "+$postHeaders.listingmode);
+                        $postJson = $localStorageStore.getArticle( $postHeaders.externalId );
+
+                        if ( $postJson != "" ) {
+                            $postJson = JSON.parse( $postJson );
+                            //console.log ($postJson);
+                            $dataJson.posts[$postHeaders.id] = $postJson;
+                        }
+
+                    }
+
+                    var $scope = getAngularScope();
+                    //console.log (angular.element($("#postSlots")).scope());
+                    $scope.$apply(function(){
+                        $scope.content = $dataJson;
+                    })
+
+                });
+
+            },
+            function(error) {
+                alert("[WebSqlPostStore:findHomePosts]:Transaction Error: " + error.message);
+            }
+        );
 
     };
 
@@ -191,17 +233,16 @@ var WebSqlPostStore = function(successCallback, errorCallback) {
 	
 	        	tellaw_core.log ("[WebSqlPostStore:updateNotUpToDateArticles]:Articles needing update : "+ results.rows.length);
 
-                var $loop=0;
-	            angular.forEach ( results.rows , function ( value, key ) {
+                for (var i=0;i<results.rows.length;i++) {
+	            //angular.forEach ( results.rows , function ( value, key ) {
 
-                    console.log ("[WebSqlPostStore:updateNotUpToDateArticles]:Article for update : "+key);
-
-	                $postHeaders = results.rows.item($loop++);
+	                $postHeaders = results.rows.item(i);
 	                //appDetailComponent.populateArticle( $postHeaders.url );
 	                tellaw_core.log ("[WebSqlPostStore:updateNotUpToDateArticles]:Updating article......... " + $postHeaders.externalId);
 	                $item = new QueueItem( $postHeaders.externalId, $postHeaders.url );
 	                $synchroManager.addToQueue($item);
-	            } );
+
+	            }
 	
 	
 	        });

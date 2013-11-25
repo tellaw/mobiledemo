@@ -33,6 +33,10 @@ function initAngularApplication () {
                     controller: 'detailController',
                     templateUrl: 'partials/detail.html'
                 }).
+                when(   '/category/:id', {
+                    controller: 'categoryController',
+                    templateUrl: 'partials/partial-index.html'
+                }).
                 when(   '/configuration/', {
                     controller: 'configurationController',
                     templateUrl: 'partials/configuration.html'
@@ -43,19 +47,44 @@ function initAngularApplication () {
     // Controller declarations
     newsApp.controller ('homeController', ['$scope', function($scope) {
 
-        console.log ("<< ==== Start of DataController ==== >>");
+        console.log ("<< ==== Start of homeController ==== >>");
 
         initAngularEvents( "home" );
 
         appListingComponent.populateArticles( $webSqlPostStore );
         $webSqlPostStore.updateNotUpToDateArticles();
 
+        $("#titleofpage").html("Actualité");
+
         $scope.name = "home";
         $scope.post = {
             content: $webSqlPostStore.findHomePosts()
         };
 
-        console.log ("<< ==== End of DataController ==== >>");
+        console.log ("<< ==== End of homeController ==== >>");
+
+    }]);
+
+    // Controller declarations
+    newsApp.controller ('categoryController', ['$scope', '$routeParams', function($scope, $routeParams) {
+
+        console.log ("<< ==== Start of categoryController ==== >>");
+
+        initAngularEvents( "home" );
+
+        $scope.name = "category";
+
+        $("#titleofpage").html("Catégorie : " + $routeParams.id);
+
+        $scope.contentId = $routeParams.id;
+
+        $scope.post = {
+            content: appListingComponent.populateCategory( $routeParams.id )
+        };
+
+        $webSqlPostStore.updateNotUpToDateArticles();
+
+        console.log ("<< ==== End of categoryController ==== >>");
 
     }]);
 
@@ -67,6 +96,8 @@ function initAngularApplication () {
         $scope.contentId = $routeParams.id;
 
         $scope.name = "detail";
+
+        $("#titleofpage").html("Article" );
 
         // If content part is empty, load the full article
         $scope.post = {
@@ -83,7 +114,7 @@ function initAngularApplication () {
 
     newsApp.controller ('configurationController', ['$scope', '$routeParams', function($scope, $routeParams) {
 
-
+        $("#titleofpage").html("Configuration" );
         console.log ("<< ==== Start of ConfigurationController ==== >>");
 
         console.log ("<< ==== End of ConfigurationController ==== >>");

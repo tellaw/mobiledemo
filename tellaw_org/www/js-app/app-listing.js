@@ -12,7 +12,7 @@ var appListingComponent = {
             dataType   : 'json',
             success    : function(response) {
                 tellaw_core.log(response);
-                appListingComponent.writeArticlesHTMLPost(response, $webSqlPostStore);
+                appListingComponent.updateLocalDbForList( response , $webSqlPostStore);
             },
             error      : function() {
                 tellaw_core.error("error");
@@ -21,13 +21,9 @@ var appListingComponent = {
 
     },
 
-    writeArticlesHTMLPost: function ( jsonresponse, $webSqlPostStore ) {
+    populateCategory: function ( $category ) {
 
-        // Update DB
-        appListingComponent.updateLocalDbForList( jsonresponse , $webSqlPostStore);
-
-        // Refesh homepage
-        //$webSqlPostStore.findHomePosts();
+        return $webSqlPostStore.findCategoryPosts( $category );
 
     },
 
